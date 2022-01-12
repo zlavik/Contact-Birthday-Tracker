@@ -1,0 +1,29 @@
+extends layout
+
+block main
+  form(action=`/register` method="post")
+    dl
+      dt
+        label(for="username") Create Username:
+      dd
+        input(type="text" name="username" placeholder="Username:" value=username)
+
+      dt
+        label(for="password") Create Password:
+      dd
+        input(type="password" name="password" placeholder="Password:" value=password)
+      dt
+        label(for="password2") Re-enter Password:
+      dd
+        input(type="password" name="password2" placeholder="Password:" value=password2)
+
+      dt
+        label(for="email") Enter email:
+      dd
+        input(type="text" name="email" placeholder="Email:" value=email)
+
+    fieldset    
+      button(formaction="/register" formmethod="post" style="margin: 0px 5px; font-size: 1.6rem; padding: 2px 6px") Submit
+      a(href="/contacts" style="padding: 2px; font-size: 1.6rem; padding: 2px 6px") Cancel
+
+block signIn

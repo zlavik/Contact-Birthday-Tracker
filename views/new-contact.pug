@@ -1,0 +1,38 @@
+extends layout
+
+block main
+  h2 Create a New Contact
+  form(action="/contacts/new" method="post")
+    dt
+        dd
+          input(type="text"
+                name="firstName"
+                placeholder='First Name'
+                value=firstName)
+          input(type="text"
+                name="lastName"
+                placeholder='Last Name'
+                value=lastName)
+          input(type="text"
+                name="phoneNumber"
+                placeholder='Phone Number'
+                value=phoneNumber)
+          select(type="text" id="category" name="category")
+            option(value=`${relationship === "Select relationship" || !relationship ? relationship = '' : relationship}` default='')= !!relationship ? relationship : "Select relationship"
+            option(value='Friend') Friend
+            option(value='Family') Family
+            option(value='Co-Worker') Co-Worker
+            option(value='Acquaintance') Acquaintance
+            option(value='Other') Other
+          input#date.form-control(name="birthday" 
+                                  type='text' 
+                                  onfocus="(this.type='date')" 
+                                  onblur="(this.type='text')"
+                                  value=birthday
+                                  placeholder='Select date'
+                                  min='1922-01-01' 
+                                  max= `${new Date().toISOString().split('T')[0]}`
+                                  )
+    fieldset    
+      button.button(formaction="/contacts/new" formmethod="post" ) Save
+      button.cancelButton(formaction="/contacts" formmethod="get" ) Cancel

@@ -1,0 +1,92 @@
+extends layout
+
+block main
+
+  if contacts === undefined || contacts.length === 0
+      p#no_list You don't have any contacts. Why not add one?
+  else
+    -let searchID = 0;
+      .dropdown
+        button.dropbtn(onclick='myFunction2()') Search by 
+          i.fa.fa-arrow-down
+        #myDropdown.dropdown-content
+          option(value='0' onclick='javascript:searchID = value; myFunction();') First Name
+          option(value='1' onclick='javascript:searchID = value; myFunction();') Last Name
+          option(value='2' onclick='javascript:searchID = value; myFunction();') Phone Number
+
+      //- creates a table with contact information
+      input#myInput(type='text' onkeyup='myFunction();' placeholder= `Search:`)
+      table#myTable
+          th First Name
+          th Last Name
+          th Phone Number
+          th Birthday
+          th Relation
+          each contact in contacts
+            tr
+              td= contact.firstname
+              td= contact.lastname
+              td= contact.phonenumber
+              td= contact.birthday.toDateString()
+              td= contact.category
+              form(action='' method='get') 
+                td
+                  button.button(formaction=`/contacts/${contact.id}/edit` formmethod='get') Edit 
+                    i.fa.fa-edit
+                td 
+                  button.bell(formaction=`/contacts/${contact.id}/reminder` formmethod='get')
+                    i.fa.fa-bell
+              td
+                form.delete(action=`/contacts/${contact.id}/destroy` method="post" ) 
+                  button.cancelButton
+                    i.fa.fa-trash
+
+      script.
+        function myFunction() {
+          // Declare variables
+          var input, filter, table, tr, td, i, txtValue;
+          input = document.getElementById("myInput");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("myTable");
+          tr = table.getElementsByTagName("tr");
+
+          // Loop through all table rows, and hide those who don't match the search query
+          for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[!this.searchID ? 0 : searchID];
+            if (td) {
+              txtValue = td.textContent || td.innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+              } else {
+                tr[i].style.display = "none";
+              }
+            }
+          }
+        }
+
+        /* When the user clicks on the button,
+        toggle between hiding and showing the dropdown content */
+        function myFunction2() {
+          document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown menu if the user clicks outside of it
+        window.onclick = function(event) {
+          if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+              var openDropdown = dropdowns[i];
+              if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+              }
+            }
+          }
+        }
+  table
+    tr
+      td(colspan="3")
+        a.button(href=`/contacts/new`) New Contact 
+          i.fa.fa-address-card-o
+
+        

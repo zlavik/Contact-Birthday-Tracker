@@ -1,0 +1,22 @@
+extends layout
+
+block main
+
+  form(action=`/users/signin` method="post")
+    dl
+      dt
+        label(for="username") Enter Username:
+      dd
+        input(type="text" name="username" placeholder="Username" value=username)
+      dt
+        label(for="password") Enter Password:
+      dd
+        input(type="password" name="password" placeholder="Password")
+
+    fieldset.actions
+      button.button(type="submit" value="Sign In" style="width:15%") Sign in
+      p(style="font-size: 16px; margin: 6px" ) Don't have account? 
+        a(href='/register' style="font-size: 16px;  margin: 1px" ) Create Account
+
+
+block signIn

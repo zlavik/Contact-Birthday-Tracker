@@ -1,0 +1,450 @@
+@import "whitespace-reset.css";
+
+body {
+  background-color: #d0f0f0;
+  box-sizing: border-box;
+  text-align: center;
+  font: 16px Helvetica, Arial, sans-serif;
+  font-size: 1.8em;
+  display: center;
+  align-items: center;
+  justify-content: center;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #95acac, #d0f0f0);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #95acac, #d0f0f0);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+option[default] {
+  display: none;
+}
+
+header, main {
+  margin: 2rem auto;
+  
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+h1 {
+  font-size: 3rem;
+  
+}
+
+h2 {
+  font-size: 2rem;
+  color: rgb(134, 118, 204);
+}
+
+table {
+  border-collapse: collapse;
+  margin: 2rem auto;
+  text-align: center;
+  
+}
+
+td, th {
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 2rem auto;
+  text-align: left;
+  
+}
+td form {
+  margin: 0px -6px;
+  text-align: left;
+  
+}
+
+
+thead, tbody, tr, th, td {
+  margin: 5rem auto;
+  
+  
+}
+
+td a, button{
+  background-color: #d6f0c0;
+  border: solid 0px #000000;
+  box-shadow: 4px 2px 5px -1px #000000;
+  color: black;
+  padding: 2px 8px;
+  text-decoration: none;
+}
+td a:hover, button:hover {
+  color: white;
+  cursor: pointer;
+}
+
+
+button.negative {
+  background-color: #ee6d6d;
+}
+
+
+a {
+  color: #db3636;
+  text-decoration: none;
+  margin: 0px -6px;
+}
+a:hover {
+color: rgb(75, 9, 0);
+cursor: pointer;
+}
+
+tfoot,
+tfoot tr,
+tfoot td {
+  background-color: #d0f0f0;
+  border: none;
+}
+
+tfoot {
+  text-align: center;
+}
+
+tfoot a {
+  display: inline-block;
+  margin-top: 2rem;
+  text-decoration: none;
+}
+
+td a:hover,
+td a:active {
+  cursor: pointer;
+}
+
+form {
+  padding: 2px;
+}
+
+
+
+fieldset {
+  border: none;
+}
+
+dt, dd {
+  display: block;
+  width: 100%;
+  
+}
+
+
+dt label {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: .4rem;
+  font-size: 1em;
+}
+
+option {
+  color: black;
+}
+
+option[value="Select relationship"] {
+  display: none;
+  color: gray;
+}
+
+select:required:invalid {
+  color: gray;
+}
+
+dd input[type="text"],[type="date"], select, [type="password"], select{
+  border: 1px solid #a4a4a4;
+  box-sizing: border-box;
+  font: normal 15x "PT Sans", Helvetica, Arial, sans-serif;
+  padding: 2px 7px;
+  margin: 3px;
+  font-size: 1em;
+}
+
+input[type="submit"] {
+  background-color: #139b3c;
+  border: none;
+  color: #ffffff;
+  margin-right: 1rem;
+  padding: 0.5rem 1.5rem;
+  text-decoration: none;
+  font-size: 1em;
+} 
+button.cancel {
+  background-color: #c80505;
+  border: none;
+  color: #ffffff;
+  margin-right: 1rem;
+  padding: 0.5rem 1.5rem;
+  text-decoration: none;
+  
+}
+
+input[type="submit"]:active,
+input[type="submit"]:hover {
+  background-color: #139b3c;
+  cursor: pointer;
+}
+button.cancel:active,
+button.cancel:hover {
+  background-color: #d13b28;
+  cursor: pointer;
+
+}
+.logoutLblPos{
+  position: fixed;
+  left: 41%;
+  bottom: 2%;
+}
+
+.flash {
+  font-size: 1.65rem;
+  font-weight: bold;
+  list-style-position: inside;
+  margin: 0 2rem;
+  max-width: 100%;
+}
+
+.flash li {
+  margin: 0.5rem auto;
+  padding: 0.5rem 2rem;
+}
+
+.error {
+  background-color: #ffcfbf;
+  color: #ff6633;
+}
+
+.success {
+  background-color: #a0f0a0;
+  color: #33cc99;
+}
+
+.info {
+  background-color: #cbe5f2;
+  color: #3d2ffd;
+  margin: 0.5rem;
+}
+
+#myInput {
+  background-image: url('/css/searchicon.png'); /* Add a search icon to input */
+  background-position: 10px 12px; /* Position the search icon */
+  background-repeat: no-repeat; /* Do not repeat the icon image */
+  width: 25%; /* Full-width */
+  font-size: 16px; /* Increase font-size */
+  padding: 12px 20px 12px 40px; /* Add some padding */
+  border: 1px solid #ddd; /* Add a grey border */
+  margin-bottom: 12px; /* Add some space below the input */
+}
+
+#myTable {
+  border-collapse: collapse; /* Collapse borders */
+  width: 50%; /* Full-width */
+  border: 1px solid #ddd; /* Add a grey border */
+  font-size: 18px; /* Increase font-size */
+}
+
+#myTable th, #myTable td {
+  text-align: left; /* Left-align text */
+  padding: 12px; /* Add padding */
+}
+
+#myTable tr {
+  /* Add a bottom border to all table rows */
+  border-bottom: 1px solid #ddd;
+}
+
+#myTable tr:hover {
+  /* Add a grey background color to the table header and on hover */
+  background-color: #f1f1f1;
+}
+
+/* Dropdown Button */
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a, option {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover, option:hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 13px;
+}
+
+ul.ks-cboxtags {
+  list-style: none;
+  padding: 20px;
+}
+ul.ks-cboxtags li{
+  display: inline;
+}
+ul.ks-cboxtags li label{
+  
+  display: inline-block;
+  background-color: rgba(255, 255, 255, .9);
+  border: 2px solid rgba(139, 139, 139, .3);
+  color: #adadad;
+  border-radius: 25px;
+  white-space: nowrap;
+  margin: 3px 2px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: all .2s;
+}
+
+ul.ks-cboxtags li label {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+ul.ks-cboxtags li label::before {
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 12px;
+  padding: 2px 6px 2px 2px;
+  content: "\f067";
+  transition: transform .3s ease-in-out;
+}
+
+ul.ks-cboxtags li input[type="checkbox"]:checked + label::before {
+  content: "\2713";
+  transform: rotate(-360deg);
+  transition: transform .3s ease-in-out;
+}
+
+ul.ks-cboxtags li input[type="checkbox"]:checked + label {
+  border: 2px solid #1bdbf8;
+  background-color: #12bbd4;
+  color: #fff;
+  transition: all .2s;
+}
+
+ul.ks-cboxtags li input[type="checkbox"] {
+  display: absolute;
+}
+
+ul.ks-cboxtags li input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+}
+
+ul.ks-cboxtags li input[type="checkbox"]:focus + label {
+  border: 2px solid #e9a1ff;
+}
+
+.button, .cancelButton, .bell {
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  border-radius: 10rem;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: 0.15rem;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  
+}
+.button:after, .cancelButton:after, .bell:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #00ccff6b;
+  border-radius: 10rem;
+  z-index: -2;
+}
+.button:before, .cancelButton:before, .bell:before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background-color: #008fb354;
+  transition: all 0.3s;
+  border-radius: 10rem;
+  z-index: -1;
+}
+.button:hover, .cancelButton:hover, .bell:hover {
+  color: #fff;
+}
+.button:hover:before, .cancelButton:hover:before, .bell:hover:before {
+  width: 100%;
+}
+
+.cancelButton:after {
+  background-color: #ff00005e;
+}
+
+.cancelButton:before {
+  background-color: #b300004f;
+}
+
+.bell:after {
+  background-color: #00ff774d;
+}
+
+.bell:before {
+  background-color: #00b1534b;
+}

@@ -1,0 +1,21 @@
+extends layout
+
+block main
+  header
+    h2 Birthday Notification Setting for '#{contact.firstname} #{contact.lastname}'
+    form(action=`/contacts/${contact.id}/setReminder` method="post")
+      .container
+        ul.ks-cboxtags
+          li
+            input#dayReminder(type='checkbox' name='day' value='true' checked=JSON.parse(contact.dayreminder) )
+            label(for='dayReminder') 1 Day reminder
+          li
+            input#weekReminder(type='checkbox' name='week' value='true' checked=JSON.parse(contact.weekreminder))
+            label(for='weekReminder') 7 Day reminder
+          li
+            input#monthReminder(type='checkbox' name='month' value='true' checked=JSON.parse(contact.monthreminder))
+            label(for='monthReminder') 30 Day reminder
+      fieldset    
+        button.button(type="submit" value="Save" ) Save
+        button.cancelButton(formaction="/contacts" formmethod="get") Cancel
+
