@@ -23,7 +23,7 @@ block main
         input(type="text" name="email" placeholder="Email:" value=email)
 
     fieldset    
-      button(formaction="/register" formmethod="post" style="margin: 0px 5px; font-size: 1.6rem; padding: 2px 6px") Submit
-      a(href="/contacts" style="padding: 2px; font-size: 1.6rem; padding: 2px 6px") Cancel
+      button.button(formaction="/register" formmethod="post" ) Submit
+      button.cancelButton(formaction="/contacts" formmethod="get" ) Cancel
 
 block signIn
