@@ -28,7 +28,7 @@ app.use(session({
     httpOnly: true,
     maxAge: 31 * 24 * 60 * 60 * 1000, // 31 days in millseconds
     path: "/",
-    secure: true,
+    secure: false,
   },
   name: "contacts app",
   resave: false,
