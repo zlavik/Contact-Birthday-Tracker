@@ -371,6 +371,7 @@ app.post(`/contacts/:contactID/setReminder`,
       res.redirect("/contacts");
     })
 )
+
 // handles sending a test reminder for testing purposes
 app.post('/contacts/:contactID/sendTestReminder', 
     requiresAuthentication,
@@ -458,5 +459,5 @@ app.use((err, req, res, _next) => {
 
 // Listener
 app.listen(port, host, () => {
-  console.log(`Todos is listening on port ${port} of ${host}!`);
+  console.log(`Contact App is listening on port ${port} of ${host}!`);
 });
