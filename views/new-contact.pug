@@ -4,39 +4,35 @@ block main
   h2 Create a New Contact
   form(action="/contacts/new" method="post")
     dt
-      .group
-        input.v2(type="text"
-              name="firstName"
-              placeholder=' First Name'
-              value=firstName
-              required="")
-        input.v2(type="text"
-              name="lastName"
-              placeholder=' Last Name'
-              value=lastName
-              required="")
-        input.v2(type="text"
-              name="phoneNumber"
-              placeholder=' Phone Number'
-              value=phoneNumber
-              required="")
-        select.v2(type="text" id="category" name="category" required="" )
-          option(value=`${relationship === "Select relationship" || !relationship ? value = '' : relationship}` default='')= !!relationship ? relationship : "Select relationship"
-          option(value='Friend') Friend
-          option(value='Family') Family
-          option(value='Co-Worker') Co-Worker
-          option(value='Acquaintance') Acquaintance
-          option(value='Other') Other
-        input.v2#date.form-control(name="birthday" 
-                                type='text' 
-                                onfocus="(this.type='date')" 
-                                onblur="(this.type='text')"
-                                value=birthday
-                                placeholder=" Contact's birthday"
-                                min='1922-01-01' 
-                                max= `${new Date().toISOString().split('T')[0]}`
-                                required=""
-                                )
+        dd
+          input(type="text"
+                name="firstName"
+                placeholder='First Name'
+                value=firstName)
+          input(type="text"
+                name="lastName"
+                placeholder='Last Name'
+                value=lastName)
+          input(type="text"
+                name="phoneNumber"
+                placeholder='Phone Number'
+                value=phoneNumber)
+          select(type="text" id="category" name="category")
+            option(value=`${relationship === "Select relationship" || !relationship ? relationship = '' : relationship}` default='')= !!relationship ? relationship : "Select relationship"
+            option(value='Friend') Friend
+            option(value='Family') Family
+            option(value='Co-Worker') Co-Worker
+            option(value='Acquaintance') Acquaintance
+            option(value='Other') Other
+          input#date.form-control(name="birthday" 
+                                  type='text' 
+                                  onfocus="(this.type='date')" 
+                                  onblur="(this.type='text')"
+                                  value=birthday
+                                  placeholder="Contact's birthday"
+                                  min='1922-01-01' 
+                                  max= `${new Date().toISOString().split('T')[0]}`
+                                  )
     fieldset    
       button.button(formaction="/contacts/new" formmethod="post" ) Save
-      a.cancelButton(href="/contacts" style="top:16px; left:5px;" ) Cancel
+      button.cancelButton(formaction="/contacts" formmethod="get" ) Cancel

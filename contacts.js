@@ -4,7 +4,6 @@ const morgan = require("morgan");
 const flash = require("express-flash");
 const session = require("express-session");
 const { body, validationResult } = require("express-validator");
-const { sendMail } = require("./lib/courier");
 const store = require("connect-loki");
 const { CronJob } = require("cron");
 const { queryAlerts } = require("./lib/notify");
@@ -112,9 +111,14 @@ const validatePassword = (password, password2) => {
     .withMessage("Password must be at least 8 characters long.")
     .isLength({ max: 50 })
     .withMessage(`Password is too long. Maximum length is 50 characters.`)
-    .matches(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,'g')
-    .withMessage("Password must contain a lowercase, uppercase, number, and a special character")
-
+    .matches(/(?=.*[a-z])/,'g')
+    .withMessage("Password must contain at least 1 lowercase alphabetical character")
+    .matches(/(?=.*[A-Z])/,'g')
+    .withMessage("Password must contain at least 1 uppercase alphabetical character")
+    .matches(/(?=.*[0-9])/,'g')
+    .withMessage("Password must contain at least 1 numeric character")
+    .matches(/(?=.*[!@#$%^&*])/,'g')
+    .withMessage("Password must contain at least 1 special character")
 }
 
 // Detect unauthorized access to routes.
@@ -283,7 +287,7 @@ app.post("/contacts/new",
 app.get("/contacts/:contactId/edit",
   catchError(async (req, res) => {
     let contactId = req.params.contactId;
-    let contact = await res.locals.store.loadContact(+contactId);
+    let contact = await res.locals.store.loadContactList(+contactId);
     if (!contact) throw new Error("Not found.");
 
     res.render("edit-contact", { contact });
@@ -306,7 +310,7 @@ app.post("/contacts/:contactId/edit",
 
 
     const rerenderEditList = async () => {
-      let contact = await store.loadContact(+contactId);
+      let contact = await store.loadContactList(+contactId);
       if (!contact) throw new Error("Not found.");
       
       res.render("edit-contact", {
@@ -372,47 +376,16 @@ app.post(`/contacts/:contactID/setReminder`,
     })
 )
 
-// handles sending a test reminder for testing purposes
-app.post('/contacts/:contactID/sendTestReminder', 
-    requiresAuthentication,
-    catchError(async (req, res, next) => {
-      let contactId = +req.params.contactID;
-      let contact = await res.locals.store.loadContactForTest(+contactId);
-      let age = new Date().getFullYear() - contact.birthday.getFullYear();
-      let user = await res.locals.store.loadUser();
-      let today = new Date();
-      today.setFullYear(today.getFullYear() - age);
-
-      let differenceInTime = today - contact.birthday.getTime()
-      let differenceInDays = differenceInTime / (1000 * 3600 * 24)
-      console.log(user.testreminder)
-      if (user.testreminder) {
-        sendMail(contact, Math.floor(Math.abs(differenceInDays)), age);
-        req.flash("success", "Email sent");
-        res.redirect("/contacts");
-      } else {
-        req.flash("error", "Cannot send more than one test messages per account!");
-        res.redirect("/contacts");
-      }
-      await res.locals.store.removeTestReminder();
-      if (!contact) throw new Error("Error");
-
-    })
-
-)
-
-// renders contact reminder page
+// renders contact page
 app.get("/contacts/:contactID/reminder", 
   requiresAuthentication,
   catchError(async (req, res) => {
     let contactId = +req.params.contactID;
-    let contact = await res.locals.store.loadContact(+contactId);
-    let user = await res.locals.store.loadUser();
+    console.log(contactId);
+    let contact = await res.locals.store.loadContactList(+contactId);
     if (!contact) throw new Error("Not found.");
-    res.render("reminder", { 
-      contact,
-      user
-     });
+
+    res.render("reminder", { contact });
   })
 )
 
@@ -423,6 +396,7 @@ app.post(`/setting/edit`,
       let dayPref = !!req.body.day ? true : false;
       let weekPref = !!req.body.week ? true : false;
       let monthPref = !!req.body.month ? true : false;
+
       let reminderPreferenceSetAll = await res.locals.store.setReminderPreferenceAll(dayPref, weekPref, monthPref);
       if (!reminderPreferenceSetAll) throw new Error("Error");
       req.flash("success", "Preference set set for all contacts successfully");
@@ -436,6 +410,7 @@ app.get("/setting",
   catchError(async (req, res) => {
     let userInfo = await res.locals.store.loadUser();
     if (!userInfo) throw new Error("Not found.");
+
     res.render("edit-user", { userInfo });
   })
 )
@@ -459,5 +434,5 @@ app.use((err, req, res, _next) => {
 
 // Listener
 app.listen(port, host, () => {
-  console.log(`Contact App is listening on port ${port} of ${host}!`);
+  console.log(`Todos is listening on port ${port} of ${host}!`);
 });

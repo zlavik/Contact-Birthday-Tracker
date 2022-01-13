@@ -6,29 +6,29 @@ block main
 		ul
 			form(action=`/contacts/${contact.id}/edit` method="post")
 				dt
-					.group
-						input.v2(type="text"
+					dd
+						input(type="text"
 									name="firstName"
-									value=` ${contact.firstname}`)
-						input.v2(type="text"
+									value=contact.firstname)
+						input(type="text"
 									name="lastName"
-									value=` ${contact.lastname}`)
-						input.v2(type="text"
+									value=contact.lastname)
+						input(type="text"
 									name="phoneNumber"
-									value=` ${contact.phonenumber}`)
-						select.v2(type="text" id="category" name="category" )
+									value=contact.phonenumber)
+						select(type="text" id="category" name="category" )
 							option(value=contact.category default='')= contact.category
 							option(value='Friend') Friend
 							option(value='Family') Family
 							option(value='Co-Worker') Co-Worker
 							option(value='Acquaintance') Acquaintance
 							option(value='Other') Other
-						input.v2#date.form-control(name="birthday" 
+						input#date.form-control(name="birthday" 
 																		type='text' 
 																		onfocus="(this.type='date')" 
 																		onblur="(this.type='text')"
-																		value=` ${contact.birthday.toDateString()}`
-																		placeholder="Contact's birthday"
+																		value=contact.birthday.toDateString()
+																		placeholder='Select date'
 																		min='1900-01-01' 
 																		max= `${new Date().toISOString().split('T')[0]}`
 																		)
