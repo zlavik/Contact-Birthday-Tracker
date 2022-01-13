@@ -112,14 +112,9 @@ const validatePassword = (password, password2) => {
     .withMessage("Password must be at least 8 characters long.")
     .isLength({ max: 50 })
     .withMessage(`Password is too long. Maximum length is 50 characters.`)
-    .matches(/(?=.*[a-z])/,'g')
-    .withMessage("Password must contain at least 1 lowercase alphabetical character")
-    .matches(/(?=.*[A-Z])/,'g')
-    .withMessage("Password must contain at least 1 uppercase alphabetical character")
-    .matches(/(?=.*[0-9])/,'g')
-    .withMessage("Password must contain at least 1 numeric character")
-    .matches(/(?=.*[!@#$%^&*])/,'g')
-    .withMessage("Password must contain at least 1 special character")
+    .matches(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,'g')
+    .withMessage("Password must contain a lowercase, uppercase, number, and a special character")
+
 }
 
 // Detect unauthorized access to routes.

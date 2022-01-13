@@ -2,28 +2,30 @@ extends layout
 
 block main
   form(action=`/register` method="post")
-    dl
-      dt
-        label(for="username") Create Username:
-      dd
-        input(type="text" name="username" placeholder="Username:" value=username)
+    .group
+      input.v2(type="text" name="username"  value=username required='')
+      span.highlight
+      span.bar
+      label.v2 Username
+    .group
+      input.v2(type="password" name="password" value=password required='')
+      span.highlight
+      span.bar
+      label.v2 Password
+    .group
+      input.v2(type="password" name="password2" value=password2 required='')
+      span.highlight
+      span.bar
+      label.v2 Password
+    .group
+      input.v2(type="email" name="email" value=email required='')
+      span.highlight
+      span.bar
+      label.v2 Email
 
-      dt
-        label(for="password") Create Password:
-      dd
-        input(type="password" name="password" placeholder="Password:" value=password)
-      dt
-        label(for="password2") Re-enter Password:
-      dd
-        input(type="password" name="password2" placeholder="Password:" value=password2)
-
-      dt
-        label(for="email") Enter email:
-      dd
-        input(type="text" name="email" placeholder="Email:" value=email)
 
     fieldset    
       button.button(formaction="/register" formmethod="post" ) Submit
-      button.cancelButton(formaction="/contacts" formmethod="get" ) Cancel
+      a.cancelButton(href="/contacts" style="top:16px; left:5px;" ) Cancel
 
 block signIn
