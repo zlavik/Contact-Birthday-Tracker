@@ -6,9 +6,10 @@ CREATE TABLE users (
   username text PRIMARY KEY,
   password text NOT NULL,
   email text NOT NULL,
-  monthReminder text DEFAULT false,
-  weekReminder text DEFAULT false,
-  dayReminder text DEFAULT false
+  monthReminder boolean DEFAULT false,
+  weekReminder boolean DEFAULT false,
+  dayReminder boolean DEFAULT false,
+  testReminder boolean DEFAULT true
 );
 
 CREATE TABLE contacts (
