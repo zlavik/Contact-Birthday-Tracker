@@ -3,15 +3,17 @@ extends layout
 block main
 
   form(action=`/users/signin` method="post")
-    dl
-      dt
-        label(for="username") Enter Username:
-      dd
-        input(type="text" name="username" placeholder="Username" value=username)
-      dt
-        label(for="password") Enter Password:
-      dd
-        input(type="password" name="password" placeholder="Password")
+    .group
+      input.v2(type="text" name="username"  value=username required='')
+      span.highlight
+      span.bar
+      label.v2 Username:
+    .group
+      input.v2(type="password" name="password"  required='')
+      span.highlight
+      span.bar
+      label.v2 Password:
+      
 
     fieldset.actions
       button.button(type="submit" value="Sign In" style="width:15%") Sign in

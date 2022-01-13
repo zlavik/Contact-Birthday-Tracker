@@ -146,21 +146,14 @@ option {
 
 option[value="Select relationship"] {
   display: none;
-  color: gray;
+  color: rgb(0, 0, 0);
 }
 
 select:required:invalid {
   color: gray;
 }
 
-dd input[type="text"],[type="date"], select, [type="password"], select{
-  border: 1px solid #a4a4a4;
-  box-sizing: border-box;
-  font: normal 15x "PT Sans", Helvetica, Arial, sans-serif;
-  padding: 2px 7px;
-  margin: 3px;
-  font-size: 1em;
-}
+
 
 input[type="submit"] {
   background-color: #139b3c;
@@ -198,33 +191,51 @@ button.cancel:hover {
   bottom: 2%;
 }
 
+.info,
+.success,
+.warning,
+.error {
+  margin: 25px 0;
+  border-radius: 3px 3px 3px 3px;
+}
+
 .flash {
-  font-size: 1.65rem;
-  font-weight: bold;
-  list-style-position: inside;
-  margin: 0 2rem;
-  max-width: 100%;
+  width: 100%;
+  padding: 6px 5px;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  font-size: 14px;
+  max-width: 10%;
+  position: relative;
+  left: 45%;
 }
 
 .flash li {
   margin: 0.5rem auto;
   padding: 0.5rem 2rem;
+  position: fixed;
+  left: 45%;
 }
 
 .error {
-  background-color: #ffcfbf;
-  color: #ff6633;
+  color: #D8000C;
+  background-color: #FFBABA;
 }
 
 .success {
-  background-color: #a0f0a0;
-  color: #33cc99;
+  color: #270;
+  background-color: #DFF2BF;
 }
 
 .info {
-  background-color: #cbe5f2;
-  color: #3d2ffd;
-  margin: 0.5rem;
+  color: #059;
+  background-color: #BEF;
+}
+
+.warning{
+  color: #9F6000;
+  background-color: #FEEFB3;
 }
 
 #myInput {
@@ -324,7 +335,7 @@ ul.ks-cboxtags {
   padding: 20px;
 }
 ul.ks-cboxtags li{
-  display: inline;
+  display: inline-block;
 }
 ul.ks-cboxtags li label{
   
@@ -448,3 +459,132 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 .bell:before {
   background-color: #00b1534b;
 }
+
+
+* { box-sizing:border-box; }
+
+/* basic stylings ------------------------------------------ */
+.container    { 
+  font-family:'Roboto';
+  width:600px; 
+  margin:30px auto 0; 
+  display:block; 
+  padding:10px 50px 50px;
+}
+h2     { 
+  text-align:center; 
+  margin-bottom:50px; 
+}
+h2 small { 
+  font-weight:normal; 
+  color:#888; 
+  display:block; 
+}
+.footer   { text-align:center; }
+.footer a  { color:#53B2C8; }
+
+/* form starting stylings ------------------------------- */
+.group        { 
+  position:relative; 
+  width:100px; 
+  top:25%; 
+  left:42%;
+  margin-bottom:45px; 
+}
+input.v2, select.v2 {
+  font-size:18px;
+  padding:10px 10px 10px 5px;
+  display:block;
+  width:300px;
+  border:none;
+  border-bottom:1px solid #000000;
+  background: -webkit-linear-gradient(to left, rgb(181, 210, 210), rgb(174, 201, 201));
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, rgb(181, 210, 210), rgb(174, 201, 201));
+  /* 181 210 210   174 201 201 */
+
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+input.v2:focus, select.v2:focus     { outline:none; }
+
+/* LABEL ======================================= */
+label.v2{
+  color:rgb(31, 31, 31); 
+  font-size:18px;
+  font-weight:normal;
+  position:absolute;
+  pointer-events:none;
+  left:5px;
+  top:10px;
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+
+/* active state */
+input.v2:focus ~ label.v2, input.v2:valid ~ label.v2, select.v2:focus ~ label.v2 , select.v2:valid ~ label.v2  {
+  top:-20px;
+  font-size:14px;
+  color:#5264AE;
+  
+}
+
+/* BOTTOM BARS ================================= */
+.bar  { position:relative; display:block; width:300px; }
+.bar:before, .bar:after   {
+  content:'';
+  height:2px; 
+  width:0;
+  bottom:1px; 
+  position:absolute;
+  background:#000000; 
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+.bar:before {
+  left:50%;
+}
+.bar:after {
+  right:50%; 
+}
+
+/* active state */
+input.v2:focus ~ .bar:before, input.v2:focus ~ .bar:after,
+select.v2:focus ~ .bar:before, select.v2:focus ~ .bar:after {
+  width:50%;
+}
+
+/* HIGHLIGHTER ================================== */
+.highlight {
+  position:absolute;
+  height:60%; 
+  width:100px; 
+  top:25%; 
+  left:0;
+  pointer-events:none;
+  opacity:0.5;
+}
+
+/* active state */
+input.v2:focus ~ .highlight,
+select.v2:focus ~ .highlight {
+  -webkit-animation:inputHighlighter 0.3s ease;
+  -moz-animation:inputHighlighter 0.3s ease;
+  animation:inputHighlighter 0.3s ease;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+  from { background:#5264AE; }
+  to  { width:0; background:transparent; }
+}
+@-moz-keyframes inputHighlighter {
+  from { background:#5264AE; }
+  to  { width:0; background:transparent; }
+}
+@keyframes inputHighlighter {
+  from { background:#5264AE; }
+  to  { width:0; background:transparent; }
+}
+

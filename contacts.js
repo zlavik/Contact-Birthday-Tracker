@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const flash = require("express-flash");
 const session = require("express-session");
 const { body, validationResult } = require("express-validator");
+const { sendMail } = require("./lib/courier");
 const store = require("connect-loki");
 const { CronJob } = require("cron");
 const { queryAlerts } = require("./lib/notify");
@@ -287,7 +288,7 @@ app.post("/contacts/new",
 app.get("/contacts/:contactId/edit",
   catchError(async (req, res) => {
     let contactId = req.params.contactId;
-    let contact = await res.locals.store.loadContactList(+contactId);
+    let contact = await res.locals.store.loadContact(+contactId);
     if (!contact) throw new Error("Not found.");
 
     res.render("edit-contact", { contact });
@@ -310,7 +311,7 @@ app.post("/contacts/:contactId/edit",
 
 
     const rerenderEditList = async () => {
-      let contact = await store.loadContactList(+contactId);
+      let contact = await store.loadContact(+contactId);
       if (!contact) throw new Error("Not found.");
       
       res.render("edit-contact", {
@@ -375,17 +376,47 @@ app.post(`/contacts/:contactID/setReminder`,
       res.redirect("/contacts");
     })
 )
+// handles sending a test reminder for testing purposes
+app.post('/contacts/:contactID/sendTestReminder', 
+    requiresAuthentication,
+    catchError(async (req, res, next) => {
+      let contactId = +req.params.contactID;
+      let contact = await res.locals.store.loadContactForTest(+contactId);
+      let age = new Date().getFullYear() - contact.birthday.getFullYear();
+      let user = await res.locals.store.loadUser();
+      let today = new Date();
+      today.setFullYear(today.getFullYear() - age);
 
-// renders contact page
+      let differenceInTime = today - contact.birthday.getTime()
+      let differenceInDays = differenceInTime / (1000 * 3600 * 24)
+      console.log(user.testreminder)
+      if (user.testreminder) {
+        sendMail(contact, Math.floor(Math.abs(differenceInDays)), age);
+        req.flash("success", "Email sent");
+        res.redirect("/contacts");
+      } else {
+        req.flash("error", "Cannot send more than one test messages per account!");
+        res.redirect("/contacts");
+      }
+      await res.locals.store.removeTestReminder();
+      if (!contact) throw new Error("Error");
+
+    })
+
+)
+
+// renders contact reminder page
 app.get("/contacts/:contactID/reminder", 
   requiresAuthentication,
   catchError(async (req, res) => {
     let contactId = +req.params.contactID;
-    console.log(contactId);
-    let contact = await res.locals.store.loadContactList(+contactId);
+    let contact = await res.locals.store.loadContact(+contactId);
+    let user = await res.locals.store.loadUser();
     if (!contact) throw new Error("Not found.");
-
-    res.render("reminder", { contact });
+    res.render("reminder", { 
+      contact,
+      user
+     });
   })
 )
 
@@ -396,7 +427,6 @@ app.post(`/setting/edit`,
       let dayPref = !!req.body.day ? true : false;
       let weekPref = !!req.body.week ? true : false;
       let monthPref = !!req.body.month ? true : false;
-
       let reminderPreferenceSetAll = await res.locals.store.setReminderPreferenceAll(dayPref, weekPref, monthPref);
       if (!reminderPreferenceSetAll) throw new Error("Error");
       req.flash("success", "Preference set set for all contacts successfully");
@@ -410,7 +440,6 @@ app.get("/setting",
   catchError(async (req, res) => {
     let userInfo = await res.locals.store.loadUser();
     if (!userInfo) throw new Error("Not found.");
-
     res.render("edit-user", { userInfo });
   })
 )
