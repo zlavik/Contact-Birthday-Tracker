@@ -5,6 +5,7 @@ const flash = require("express-flash");
 const session = require("express-session");
 const { body, validationResult } = require("express-validator");
 const { sendMail } = require("./lib/courier");
+const { findDaysUntilBirthday } = require("./lib/helperFunctions")
 const store = require("connect-loki");
 const { CronJob } = require("cron");
 const { queryAlerts } = require("./lib/notify");
@@ -378,17 +379,12 @@ app.post('/contacts/:contactID/sendTestReminder',
     catchError(async (req, res, next) => {
       let contactId = +req.params.contactID;
       let contact = await res.locals.store.loadContactForTest(+contactId);
-      let age = new Date().getFullYear() - contact.birthday.getFullYear();
       let user = await res.locals.store.loadUser();
-      let today = new Date();
-      today.setFullYear(today.getFullYear() - age);
+      let daysUntilBirthday = findDaysUntilBirthday(contact.birthday);
 
-      let differenceInTime = today - contact.birthday.getTime()
-      let differenceInDays = differenceInTime / (1000 * 3600 * 24)
-      console.log(user.testreminder)
       if (user.testreminder) {
-        sendMail(contact, Math.floor(Math.abs(differenceInDays)), age);
-        req.flash("success", "Email sent");
+        sendMail(contact, daysUntilBirthday);
+        req.flash("success", "Email maybe sent. Check your inbox.");
         res.redirect("/contacts");
       } else {
         req.flash("error", "Cannot send more than one test messages per account!");

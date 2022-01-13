@@ -515,7 +515,7 @@ label.v2{
   position:absolute;
   pointer-events:none;
   left:5px;
-  top:10px;
+  top:-10px;
   transition:0.2s ease all; 
   -moz-transition:0.2s ease all; 
   -webkit-transition:0.2s ease all;
