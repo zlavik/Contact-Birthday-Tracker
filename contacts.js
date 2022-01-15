@@ -438,7 +438,7 @@ app.get("/setting",
 
 // gets daily alerts at 8 am PST.
 const getDailyAlerts = new CronJob(
-  '* 08 * * *',
+  '00 08 * * *',
   queryAlerts,
   null,
   false,
