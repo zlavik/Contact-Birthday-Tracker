@@ -35,7 +35,11 @@ h1 {
 
 h2 {
   font-size: 2rem;
-  color: rgb(134, 118, 204);
+  margin: auto;
+  width: 60%;
+  border: 3px solid #51554b;
+  padding: 10px;
+  color: rgb(33, 32, 39);
 }
 
 table {
@@ -477,7 +481,8 @@ h2     {
 }
 h2 small { 
   font-weight:normal; 
-  color:#888; 
+  color:rgb(32, 28, 28); 
+  margin: 0 5%;
   display:block; 
 }
 .footer   { text-align:center; }
