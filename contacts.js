@@ -14,8 +14,8 @@ const catchError = require("./lib/catch-error");
 
 
 const app = express();
-const host = config.HOST;
-const port = config.PORT;
+const host = 'localhost';
+const port = '3000';
 const LokiStore = store(session);
 
 app.set("views", "./views");
@@ -121,19 +121,26 @@ const validatePassword = (password, password2) => {
 // Detect unauthorized access to routes.
 const requiresAuthentication = (req, res, next) => {
   if (!res.locals.signedIn) {
-    res.redirect(302, "/users/signin");
+    res.redirect(302, "/signin");
   } else {
     next();
   }
 };
 
-// Redirect start page
+
+
 app.get("/", (req, res) => {
-  res.redirect("/contacts");
-});
+  if (!res.locals.signedIn) {
+    res.render("home", {
+    });
+  } else {
+    res.redirect('/contacts')
+  }
+
+})
 
 // Render the Sign In page.
-app.get("/users/signin", (req, res) => {
+app.get("/signin", (req, res) => {
   req.flash("info", "Please sign in.");
   res.render("signin", {
     flash: req.flash(),
@@ -149,7 +156,7 @@ app.get("/register", (req, res) => {
 });
 
 // Handle Sign In form submission
-app.post("/users/signin",
+app.post("/signin",
   catchError(async (req, res) => {
     let username = req.body.username.trim();
     let password = req.body.password;
@@ -217,7 +224,7 @@ app.post("/register",
 app.post("/users/signout", (req, res) => {
   delete req.session.username;
   delete req.session.signedIn;
-  res.redirect("/users/signin");
+  res.redirect("/signin");
 });
 
 // Renders contact page
@@ -228,6 +235,7 @@ app.get("/contacts",
     let contacts = await store.sortedContacts();
     res.render("contacts", {
       contacts,
+      signedIn : res.locals.signedIn
     });
   })
 );

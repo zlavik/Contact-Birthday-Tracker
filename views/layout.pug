@@ -25,12 +25,6 @@ html(lang="en-US")
             each message in flash[kind]
               li.flash(class=kind)= message
 
-      block main
+    block main
+      
 
-  footer
-    block signIn
-      fieldset.actions.logoutLblPos
-        p User: #{username}
-          form(action="/users/signout" method="post")  
-            button.button(formaction='/setting' formmethod="get") Preferences
-            button.cancelButton() Sign Out
