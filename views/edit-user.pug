@@ -1,20 +1,23 @@
 extends layout
 
 block main
-  ul
-    form(action=`/setting/edit` method="post")
-      p Set reminders for all:
-      .container
-        ul.ks-cboxtags
-          li
-            input#dayReminder(type='checkbox' name='day' value='true' checked=JSON.parse(userInfo.dayreminder) )
-            label(for='dayReminder') 1 Day reminder
-          li
-            input#weekReminder(type='checkbox' name='week' value='true' checked=JSON.parse(userInfo.weekreminder))
-            label(for='weekReminder') 7 Day reminder
-          li
-            input#monthReminder(type='checkbox' name='month' value='true' checked=JSON.parse(userInfo.monthreminder))
-            label(for='monthReminder') 30 Day reminder
-      fieldset    
-        button.button(type="submit" value="Save" ) Save
-        button.cancelButton(formaction="/contacts" formmethod="get") Cancel
+  .container
+    .row.header
+      ul
+        form#add-contact-form(action=`/setting/edit` method="post")
+          h2.addcontact Set reminders for all:
+          .container
+            ul
+              li
+                input#dayReminder(type='checkbox' name='day' value='true' checked=JSON.parse(userInfo.dayreminder) )
+                label(for='dayReminder') 1 Day reminder
+              
+                input#weekReminder(type='checkbox' name='week' value='true' checked=JSON.parse(userInfo.weekreminder))
+                label(for='weekReminder') 7 Day reminder
+              
+                input#monthReminder(type='checkbox' name='month' value='true' checked=JSON.parse(userInfo.monthreminder))
+                label(for='monthReminder') 30 Day reminder
+          fieldset    
+            button.btn.btn-submit(type="submit" value="Save" ) Save 
+              i.fa.fa-save
+            a.btn.btn-cancel(href='/contacts') Cancel
