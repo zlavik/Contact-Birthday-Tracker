@@ -24,6 +24,7 @@
     "express-flash": "0.0.2",
     "express-session": "^1.17.0",
     "express-validator": "^6.2.0",
+    "list.js": "^2.3.1",
     "morgan": "^1.9.1",
     "pg": "^8.7.1",
     "pug": "^3.0.2"

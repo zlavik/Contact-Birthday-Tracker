@@ -1,0 +1,30 @@
+extends layout
+
+block main
+  header
+    h1
+      | Welcome
+      span !
+  .site-wrap
+    p
+      | This is a simple birthday tracker.
+    p
+      | Just create an account by clicking register on top left corner.
+      img.align-left.slide-in(src='/images/sign-up.png')
+    p
+      | Add a contact by clicking 'New Contact'
+      img.align-right.slide-in(src='/images/empty-list.png')
+      img.align-left.slide-in(src='/images/add-contact.png')
+      img.align-right.slide-in(src='/images/contact-added.png')
+    p
+      | Set a reminder by clicking on the bell
+      img.align-left.slide-in(src='/images/reminder-set.png')
+    p 
+      | Send a test reminder to your email by clicking on 'Send Email Reminder'
+    P 
+      | An email should arrive shortly, check junk mail just in case.
+      img.align-right.slide-in(src='/images/email-sent.png')
+    p
+      | Or set all current contact's reminder all at once by clicking on setting on top left corner.
+      img.align-left.slide-in(src='/images/reminder-all.png')
+    a.button(href='/') Back to top
