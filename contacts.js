@@ -166,7 +166,6 @@ app.post("/signin",
       let session = req.session;
       session.username = username;
       session.signedIn = true;
-      req.flash("info", "Welcome!");
       res.redirect("/contacts");
     }
   })
@@ -208,7 +207,6 @@ app.post("/register",
       let session = req.session;
       session.username = username;
       session.signedIn = true;
-      req.flash("info", "Welcome!");
       res.redirect("/contacts");
     }
   })
@@ -392,7 +390,7 @@ app.post('/contacts/:contactID/sendTestReminder',
 
       if (user.testreminder) {
         sendMail(contact, daysUntilBirthday);
-        req.flash("success", "Email maybe sent. Check your inbox.");
+        req.flash("success", "Email sent! Check your inbox.");
         res.redirect("/contacts");
       } else {
         req.flash("error", "Cannot send more than one test messages per account!");
