@@ -130,18 +130,13 @@ const requiresAuthentication = (req, res, next) => {
 
 
 app.get("/", (req, res) => {
-  if (!res.locals.signedIn) {
-    res.render("home", {
-    });
-  } else {
-    res.redirect('/contacts')
-  }
-
+  res.render("home", {
+    signedIn : res.locals.signedIn,
+  });
 })
 
 // Render the Sign In page.
 app.get("/signin", (req, res) => {
-  req.flash("info", "Please sign in.");
   res.render("signin", {
     flash: req.flash(),
   });
@@ -149,7 +144,6 @@ app.get("/signin", (req, res) => {
 
 // Render the register page.
 app.get("/register", (req, res) => {
-  req.flash("info", "Please register.");
   res.render("register", {
     flash: req.flash(),
   });
@@ -252,6 +246,8 @@ const formatPhoneNumber = (number) => {
     }).join('');
 }
 
+const capitalizeName = (name) => name.charAt(0).toUpperCase() + name.slice(1);
+
 // Handles adding a new contact
 app.post("/contacts/new",
   requiresAuthentication,
@@ -280,7 +276,9 @@ app.post("/contacts/new",
       errors.array().forEach(message => req.flash("error", message.msg));
       rerenderNewList();
     } else {
-        let created = await res.locals.store.createContact(req.body.firstName, req.body.lastName, req.body.birthday, req.body.category, formatPhoneNumber(req.body.phoneNumber));
+        let created = await res.locals.store.createContact(capitalizeName(req.body.firstName), 
+                            capitalizeName(req.body.lastName), req.body.birthday, 
+                            req.body.category, formatPhoneNumber(req.body.phoneNumber));
         if (!created) throw new Error("Not found.");
         req.flash("success", `${req.body.firstName} ${req.body.lastName} has been added to your contact list.`);
         res.redirect(`/contacts`);
@@ -335,7 +333,9 @@ app.post("/contacts/:contactId/edit",
         errors.array().forEach(message => req.flash("error", message.msg));
         rerenderEditList();
       } else {
-        let updatedContact = await store.updateContact(req.body.firstName, req.body.lastName,req.body.birthday, req.body.category, formatPhoneNumber(req.body.phoneNumber), +contactId);
+        let updatedContact = await store.updateContact(capitalizeName(req.body.firstName), capitalizeName(req.body.lastName), 
+                                    req.body.birthday, req.body.category, 
+                                    formatPhoneNumber(req.body.phoneNumber), +contactId);
         if (!updatedContact) throw new Error("Not found.");
 
         req.flash("success", "Contact updated.");
