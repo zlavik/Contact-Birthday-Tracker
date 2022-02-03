@@ -13,18 +13,12 @@ html(lang="en-US")
     
   body
     main
-      - let kinds = Object.keys(flash || {});
-      if kinds.length > 0
-        ul
-          each kind in kinds
-            each message in flash[kind]
-              li.flash(class=kind)= message
       link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Montserrat|Open+Sans')
       nav#main
         ul
           li.logo
             a(href='/' title='Contacts')
-              | Contacts
+              | Birthday Tracker
               span .
           li 
             a(href='/' title='Home') Home
@@ -42,6 +36,12 @@ html(lang="en-US")
               a(href='/signin' title='Login') Sign in
             li
               a.nav-botton(href='/register' title='register') Register 
+    - let kinds = Object.keys(flash || {});
+      if kinds.length > 0
+        ul
+          each kind in kinds
+            each message in flash[kind]
+              li.flash(class=kind)= message
     block main
     script.
       const nav = document.querySelector('#main');

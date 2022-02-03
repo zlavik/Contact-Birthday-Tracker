@@ -16,12 +16,19 @@ block main
         form#add-contact-form(action=`/contacts/${contact.id}/setReminder` method="post")
           ul
             li
-              input(type='checkbox' name='day' value='true' checked=JSON.parse(contact.dayreminder) )
-              label(for='dayReminder') 1 Day reminder
-              input(type='checkbox' name='week' value='true' checked=JSON.parse(contact.weekreminder))
-              label(for='weekReminder') 7 Day reminder
-              input(type='checkbox' name='month' value='true' checked=JSON.parse(contact.monthreminder))
-              label(for='monthReminder') 30 Day reminder
+              input#dayReminder(type='checkbox' name='day' value='true' checked=JSON.parse(contact.dayreminder) )
+              label(for='dayReminder') 
+                span
+                | 1 Day reminder
+              input#weekReminder(type='checkbox' name='week' value='true' checked=JSON.parse(contact.weekreminder))
+              label(for='weekReminder') 
+                span
+                | 7 Day reminder
+              input#monthReminder(type='checkbox' name='month' value='true' checked=JSON.parse(contact.monthreminder))
+              label(for='monthReminder') 
+                span
+                | 30 Day reminder
+
           fieldset    
             button.btn.btn-submit(type="submit" value="Save" ) Save 
               i.fa.fa-save

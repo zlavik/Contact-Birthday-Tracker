@@ -10,13 +10,19 @@ block main
             ul
               li
                 input#dayReminder(type='checkbox' name='day' value='true' checked=JSON.parse(userInfo.dayreminder) )
-                label(for='dayReminder') 1 Day reminder
+                label(for='dayReminder') 
+                  span
+                  | 1 Day reminder
               
                 input#weekReminder(type='checkbox' name='week' value='true' checked=JSON.parse(userInfo.weekreminder))
-                label(for='weekReminder') 7 Day reminder
+                label(for='weekReminder') 
+                  span
+                  | 7 Day reminder
               
                 input#monthReminder(type='checkbox' name='month' value='true' checked=JSON.parse(userInfo.monthreminder))
-                label(for='monthReminder') 30 Day reminder
+                label(for='monthReminder') 
+                  span
+                  | 30 Day reminder
           fieldset    
             button.btn.btn-submit(type="submit" value="Save" ) Save 
               i.fa.fa-save
