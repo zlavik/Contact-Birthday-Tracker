@@ -1,30 +1,39 @@
 extends layout
 
 block main
-  form(action=`/register` method="post")
-    .group
-      input.v2(type="text" name="username"  value=username required='')
-      span.highlight
-      span.bar
-      label.v2 Username
-    .group
-      input.v2(type="password" name="password" value=password required='')
-      span.highlight
-      span.bar
-      label.v2 Password
-    .group
-      input.v2(type="password" name="password2" value=password2 required='')
-      span.highlight
-      span.bar
-      label.v2 Password
-    .group
-      input.v2(type="email" name="email" value=email required='')
-      span.highlight
-      span.bar
-      label.v2 Email
+  .login-card
+    h1 Register
+    br
+    form(action=`/register` method="post")
+      input(type="text" name="username"  placeholder='Username' value=username required='')
+      input(type="password" name="password" placeholder='Password' value=password required='')
+      input(type="password" name="password2" placeholder='Confirm Password' value=password2 required='')
+      input(type="email" name="email" placeholder='Email' value=email required='')
+      input.login.login-submit(type='submit' name='register' value='Register')
+
+    //- .group
+    //-   input.v2(type="text" name="username"  value=username required='')
+    //-   span.highlight
+    //-   span.bar
+    //-   label.v2 Username
+    //- .group
+    //-   input.v2(type="password" name="password" value=password required='')
+    //-   span.highlight
+    //-   span.bar
+    //-   label.v2 Password
+    //- .group
+    //-   input.v2(type="password" name="password2" value=password2 required='')
+    //-   span.highlight
+    //-   span.bar
+    //-   label.v2 Confirm Password
+    //- .group
+    //-   input.v2(type="email" name="email" value=email required='')
+    //-   span.highlight
+    //-   span.bar
+    //-   label.v2 Email
 
 
-    fieldset    
-      button.button(formaction="/register" formmethod="post" ) Submit
-      a.cancelButton(href="/" style="top:16px; left:5px;" ) Cancel
+    //- fieldset    
+    //-   button.button(formaction="/register" formmethod="post" ) Submit
+    //-   a.cancelButton(href="/" style="top:16px; left:5px;" ) Cancel
 
