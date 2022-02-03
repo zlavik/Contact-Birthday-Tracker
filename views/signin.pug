@@ -1,24 +1,16 @@
 extends layout
 
 block main
-
-  form(action=`/signin` method="post")
-    .group
-      input.v2(type="text" name="username"  value=username)
-      span.highlight
-      span.bar
-      label.v2(for='username') Username:
-    .group
-      input.v2(type="password" name="password" value=password)
-      span.highlight
-      span.bar
-      label.v2(for='password') Password:
-      
-
-    fieldset.actions
-      button.button(type="submit" value="Sign In" style="width:15%") Sign in
-      p(style="font-size: 16px; margin: 6px" ) Don't have account? 
-        a(href='/register' style="font-size: 16px;  margin: 1px" ) Create Account
-
+  .login-card
+    h1 Log-in
+    br
+    form(action=`/signin` method="post")
+      input(type='text' name='username'  placeholder='Username' value=username)
+      input(type='password' name='password' placeholder='Password' value=password)
+      input.login.login-submit(type='submit' name='login' value='Login')
+    .login-help
+      a(href='/register') Register
+      //- |  &bull; 
+      //- a(href='#') Forgot Password
 
 
