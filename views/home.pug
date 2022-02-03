@@ -1,101 +1,16 @@
-doctype html
+extends layout
 
-html(lang="en-US")
-
-  head
-    title Contacts App
-    meta(charset="UTF-8")
-    link(rel="stylesheet" href="//fonts.googleapis.com/css?family=PT+Sans")
-    link(rel="stylesheet" href="/stylesheets/whitespace-reset.css")
-    link(rel="stylesheet" href="/stylesheets/application.css")
-    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
-    script(src="/javascripts/application.js")
-
-  body
-    main
-      - let kinds = Object.keys(flash || {});
-      if kinds.length > 0
-        ul
-          each kind in kinds
-            each message in flash[kind]
-              li.flash(class=kind)= message
-    block main
-      link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Montserrat|Open+Sans')
-      nav#main
-        ul
-          li.logo
-            a(href='/' title='Contacts')
-              | Contacts
-              span .
-          li
-            a(href='/signin' title='Login') Sign in
-          li
-            a.nav-botton(href='/register' title='register') Register
-      header
-        h1
-          | Hello World
-          span !
-      .site-wrap
-        h2 About Us
-        p
-          | test
-          img.align-left.slide-in(src='https://source.unsplash.com/iYoAPaSPBKI')
-        p
-          | test
-          img.align-right.slide-in(src='https://source.unsplash.com/XLm6-fPwK5Q')
-        p
-    script.
-      const nav = document.querySelector('#main');
-      const topOfNav = nav.offsetTop;
-
-      function fixNav() {
-        if(window.scrollY >= !topOfNav) {
-          document.body.style.paddingTop = nav.offsetHeight + 'px';
-          document.body.classList.add('fixed-nav');
-        } else {
-          document.body.style.paddingTop = 0;
-          document.body.classList.remove('fixed-nav');
-        }
-      }
-
-      window.addEventListener('scroll', fixNav);
-
-      function debounce(func, wait = 20, immediate = true) {
-        var timeout;
-
-        return function() {
-          var context = this, args = arguments;
-
-          var later = function() {
-            timeout = null;
-            if (!immediate) func.apply(context, args);
-          };
-
-          var callNow = immediate && !timeout;
-          clearTimeout(timeout);
-          timeout = setTimeout(later, wait);
-
-          if (callNow) func.apply(context, args);
-        };
-      };
-
-      const sliderImages = document.querySelectorAll('.slide-in');
-
-      function checkSlide(e) {
-        sliderImages.forEach(sliderImage => {
-          const slideInAt = (window.scrollY + window.innerHeight) - sliderImage.height / 2;
-          const imageBottom = sliderImage.offsetTop + sliderImage.height;
-          const isHalfShown = slideInAt > sliderImage.offsetTop;
-          const isNotScrolledPast = window.scrollY < imageBottom;
-
-          if(isHalfShown && isNotScrolledPast) {
-            sliderImage.classList.add('active');
-          } else {
-            sliderImage.classList.remove('active');
-          }
-        });
-      }
-
-      window.addEventListener('scroll', debounce(checkSlide));
-
-
+block main
+  header
+    h1
+      | Welcome
+      span !
+  .site-wrap
+    h2 About Us
+    p
+      | test
+      img.align-left.slide-in(src='https://source.unsplash.com/iYoAPaSPBKI')
+    p
+      | test
+      img.align-right.slide-in(src='https://source.unsplash.com/XLm6-fPwK5Q')
+    p
