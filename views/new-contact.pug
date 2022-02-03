@@ -1,42 +1,62 @@
 extends layout
 
 block main
-  h2 Create a New Contact
-  form(action="/contacts/new" method="post")
-    dt
-      .group
-        input.v2(type="text"
-              name="firstName"
-              placeholder=' First Name'
-              value=firstName
-              required="")
-        input.v2(type="text"
-              name="lastName"
-              placeholder=' Last Name'
-              value=lastName
-              required="")
-        input.v2(type="text"
-              name="phoneNumber"
-              placeholder=' Phone Number'
-              value=phoneNumber
-              required="")
-        select.v2(type="text" id="category" name="category" required="" )
-          option(value=`${relationship === "Select relationship" || !relationship ? value = '' : relationship}` default='')= !!relationship ? relationship : "Select relationship"
-          option(value='Friend') Friend
-          option(value='Family') Family
-          option(value='Co-Worker') Co-Worker
-          option(value='Acquaintance') Acquaintance
-          option(value='Other') Other
-        input.v2#date.form-control(name="birthday" 
-                                type='text' 
-                                onfocus="(this.type='date')" 
-                                onblur="(this.type='text')"
-                                value=birthday
-                                placeholder=" Contact's birthday"
-                                min='1922-01-01' 
-                                max= `${new Date().toISOString().split('T')[0]}`
-                                required=""
-                                )
-    fieldset    
-      button.button(formaction="/contacts/new" formmethod="post" ) Save
-      a.cancelButton(href="/contacts" style="top:16px; left:5px;" ) Cancel
+  head
+    title Add Contact
+  .container
+    .row.header
+      h1.addcontact ADD CONTACT
+    .row.body
+      form#add-contact-form(action="/contacts/new" method="post")
+        ul
+          li
+            p
+              label(for='firstname')
+                | First name 
+                span.req *
+              input(type="text"
+                name="firstName"
+                placeholder='John'
+                required="true"
+                value=firstName)
+            p.pull-center
+              label(for='lastname')
+                | Last name 
+                span.req *
+              input(type="text"
+                    name="lastName"
+                    placeholder='Smith'
+                    required="true"
+                    value=lastName)
+            p
+              label(for='phoneNumber')
+                | Phone Number
+                span.req *
+              input(type="text"
+                name="phoneNumber"
+                required="true"
+                placeholder='123-456-7890'
+                value=phoneNumber)
+          li
+            p
+              label(for='birthday') Birthday
+                span.req *
+              input(name="birthday" 
+                    type='text' 
+                    onfocus="(this.type='date')" 
+                    placeholder='mm-dd-yyyy'
+                    min='1922-01-01' 
+                    max= `${new Date().toISOString().split('T')[0]}`
+                    required="true"
+                    )
+            p.pull-center
+              label(for='dob') Relationship 
+              select(type="text" id="category" name="category" required="" )
+                option(value='Other') Other
+                option(value='Friend') Friend
+                option(value='Family') Family
+                option(value='Co-Worker') Co-Worker
+                option(value='Acquaintance') Acquaintance
+          li
+            input.btn.btn-submit(type='submit' value='Submit')
+            a.btn.btn-cancel(href='/contacts') Cancel

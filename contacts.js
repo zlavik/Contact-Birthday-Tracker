@@ -14,8 +14,8 @@ const catchError = require("./lib/catch-error");
 
 
 const app = express();
-const host = config.HOST;
-const port = config.PORT;
+const host = 'localhost';
+const port = '3000';
 const LokiStore = store(session);
 
 app.set("views", "./views");
@@ -121,20 +121,22 @@ const validatePassword = (password, password2) => {
 // Detect unauthorized access to routes.
 const requiresAuthentication = (req, res, next) => {
   if (!res.locals.signedIn) {
-    res.redirect(302, "/users/signin");
+    res.redirect(302, "/signin");
   } else {
     next();
   }
 };
 
-// Redirect start page
+
+
 app.get("/", (req, res) => {
-  res.redirect("/contacts");
-});
+  res.render("home", {
+    signedIn : res.locals.signedIn,
+  });
+})
 
 // Render the Sign In page.
-app.get("/users/signin", (req, res) => {
-  req.flash("info", "Please sign in.");
+app.get("/signin", (req, res) => {
   res.render("signin", {
     flash: req.flash(),
   });
@@ -142,14 +144,13 @@ app.get("/users/signin", (req, res) => {
 
 // Render the register page.
 app.get("/register", (req, res) => {
-  req.flash("info", "Please register.");
   res.render("register", {
     flash: req.flash(),
   });
 });
 
 // Handle Sign In form submission
-app.post("/users/signin",
+app.post("/signin",
   catchError(async (req, res) => {
     let username = req.body.username.trim();
     let password = req.body.password;
@@ -165,7 +166,6 @@ app.post("/users/signin",
       let session = req.session;
       session.username = username;
       session.signedIn = true;
-      req.flash("info", "Welcome!");
       res.redirect("/contacts");
     }
   })
@@ -207,7 +207,6 @@ app.post("/register",
       let session = req.session;
       session.username = username;
       session.signedIn = true;
-      req.flash("info", "Welcome!");
       res.redirect("/contacts");
     }
   })
@@ -217,7 +216,7 @@ app.post("/register",
 app.post("/users/signout", (req, res) => {
   delete req.session.username;
   delete req.session.signedIn;
-  res.redirect("/users/signin");
+  res.redirect("/signin");
 });
 
 // Renders contact page
@@ -228,6 +227,7 @@ app.get("/contacts",
     let contacts = await store.sortedContacts();
     res.render("contacts", {
       contacts,
+      signedIn : res.locals.signedIn
     });
   })
 );
@@ -243,6 +243,8 @@ const formatPhoneNumber = (number) => {
     return idx === 3 || idx === 6 ? `-${digit}` : digit;
     }).join('');
 }
+
+const capitalizeName = (name) => name.charAt(0).toUpperCase() + name.slice(1);
 
 // Handles adding a new contact
 app.post("/contacts/new",
@@ -272,7 +274,9 @@ app.post("/contacts/new",
       errors.array().forEach(message => req.flash("error", message.msg));
       rerenderNewList();
     } else {
-        let created = await res.locals.store.createContact(req.body.firstName, req.body.lastName, req.body.birthday, req.body.category, formatPhoneNumber(req.body.phoneNumber));
+        let created = await res.locals.store.createContact(capitalizeName(req.body.firstName), 
+                            capitalizeName(req.body.lastName), req.body.birthday, 
+                            req.body.category, formatPhoneNumber(req.body.phoneNumber));
         if (!created) throw new Error("Not found.");
         req.flash("success", `${req.body.firstName} ${req.body.lastName} has been added to your contact list.`);
         res.redirect(`/contacts`);
@@ -327,7 +331,9 @@ app.post("/contacts/:contactId/edit",
         errors.array().forEach(message => req.flash("error", message.msg));
         rerenderEditList();
       } else {
-        let updatedContact = await store.updateContact(req.body.firstName, req.body.lastName,req.body.birthday, req.body.category, formatPhoneNumber(req.body.phoneNumber), +contactId);
+        let updatedContact = await store.updateContact(capitalizeName(req.body.firstName), capitalizeName(req.body.lastName), 
+                                    req.body.birthday, req.body.category, 
+                                    formatPhoneNumber(req.body.phoneNumber), +contactId);
         if (!updatedContact) throw new Error("Not found.");
 
         req.flash("success", "Contact updated.");
@@ -384,7 +390,7 @@ app.post('/contacts/:contactID/sendTestReminder',
 
       if (user.testreminder) {
         sendMail(contact, daysUntilBirthday);
-        req.flash("success", "Email maybe sent. Check your inbox.");
+        req.flash("success", "Email sent! Check your inbox.");
         res.redirect("/contacts");
       } else {
         req.flash("error", "Cannot send more than one test messages per account!");

@@ -1,92 +1,98 @@
 extends layout
 
 block main
-
-  if contacts === undefined || contacts.length === 0
-      p#no_list You don't have any contacts. Why not add one?
-  else
-    -let searchID = 0;
-      .dropdown
-        button.dropbtn(onclick='myFunction2()') Search by 
-          i.fa.fa-arrow-down
-        #myDropdown.dropdown-content
-          option(value='0' onclick='javascript:searchID = value; myFunction();') First Name
-          option(value='1' onclick='javascript:searchID = value; myFunction();') Last Name
-          option(value='2' onclick='javascript:searchID = value; myFunction();') Phone Number
-
-      //- creates a table with contact information
-      input#myInput(type='text' onkeyup='myFunction();' placeholder= `Search:`)
-      table#myTable
-          th First Name
-          th Last Name
-          th Phone Number
-          th Birthday
-          th Relation
+  #tableID
+    div
+      h1 Contacts
+    if contacts === undefined || contacts.length === 0
+      table
+        h2 You don't have any contacts. Why not add one? 
+          a.button(href=`/contacts/new`) New Contact 
+            i.fa.fa-address-card-o
+    else
+      table.table-list(data-currentpage='1')
+        thead
+          th
+            button.sort(type='button' data-sort='firstname')
+              | First Name
+              i.caret
+          th
+            button.sort(type='button' data-sort='lastname')
+              | Last Name
+              i.caret
+          th
+            button.sort(type='button' data-sort='birthday')
+              | Birthday
+              i.caret
+          th
+            p.sort
+              | Action
+              i.caret
+        // IMPORTANT, class="list" must be on tbody
+        tbody.list
           each contact in contacts
             tr
-              td= contact.firstname
-              td= contact.lastname
-              td= contact.phonenumber
-              td= contact.birthday.toDateString()
-              td= contact.category
-              form(action='' method='get') 
-                td
+              td.minify.firstname=contact.firstname
+              td.minify.lastname=contact.lastname
+              td.minify.birthday=contact.birthday.toDateString().split(' ').slice(1).join(' ')
+              td.minify.setting
+                form
                   button.button(formaction=`/contacts/${contact.id}/edit` formmethod='get') Edit 
                     i.fa.fa-edit
-                td 
                   button.bell(formaction=`/contacts/${contact.id}/reminder` formmethod='get')
                     i.fa.fa-bell
-              td
-                form.delete(action=`/contacts/${contact.id}/destroy` method="post" ) 
-                  button.cancelButton
-                    i.fa.fa-trash
+                  button.remove-item-btn(type='submit' formmethod='post' formaction=`/contacts/${contact.id}/destroy` onclick="return confirm('Are you sure you want to delete this contact?')")
+                      i.fa.fa-trash
+                      
+          tfoot
+            tr
+              td.table-footer(colspan='3')
+                .table-pagination
+                  button.btn-tablepage.jTablePagePrev(type='button') &laquo;
+                  ul.pagination
+                  button.btn-tablepage.jTablePageNext(type='button') &raquo;
+                .table-filter
+                  input.search(placeholder='Search ')
+                td
+                  a.button(href=`/contacts/new`) New Contact 
+                    i.fa.fa-address-card-o
 
-      script.
-        function myFunction() {
-          // Declare variables
-          var input, filter, table, tr, td, i, txtValue;
-          input = document.getElementById("myInput");
-          filter = input.value.toUpperCase();
-          table = document.getElementById("myTable");
-          tr = table.getElementsByTagName("tr");
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js')
+  script.
+      var pagingRows = 5;
 
-          // Loop through all table rows, and hide those who don't match the search query
-          for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[!this.searchID ? 0 : searchID];
-            if (td) {
-              txtValue = td.textContent || td.innerText;
-              if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-              } else {
-                tr[i].style.display = "none";
+      var paginationOptions = {
+          innerWindow: 1,
+          left: 0,
+          right: 0
+      };
+      var options = {
+        valueNames: [ 'firstname', 'lastname', 'birthday' ],
+        page: pagingRows,
+        pagination: true
+      };
+
+      var tableList = new List('tableID', options);
+
+      $('.jTablePageNext').on('click', function(){
+          var list = $('.pagination').find('li');
+          $.each(list, function(position, element){
+              if($(element).is('.active')){
+                  $(list[position+1]).trigger('click');
               }
-            }
-          }
-        }
-
-        /* When the user clicks on the button,
-        toggle between hiding and showing the dropdown content */
-        function myFunction2() {
-          document.getElementById("myDropdown").classList.toggle("show");
-        }
-
-        // Close the dropdown menu if the user clicks outside of it
-        window.onclick = function(event) {
-          if (!event.target.matches('.dropbtn')) {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            var i;
-            for (i = 0; i < dropdowns.length; i++) {
-              var openDropdown = dropdowns[i];
-              if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
+          })
+      })
+      $('.jTablePagePrev').on('click', function(){
+          var list = $('.pagination').find('li');
+          $.each(list, function(position, element){
+              if($(element).is('.active')){
+                  $(list[position-1]).trigger('click');
               }
-            }
-          }
-        }
-  table
-    tr
-      td(colspan="3")
-        a.button(href=`/contacts/new`) New Contact 
-          i.fa.fa-address-card-o
+          })
+      })
 
-        
+
+
+
+  

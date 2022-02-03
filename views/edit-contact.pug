@@ -1,12 +1,67 @@
-extend layout
+extends layout
 
 block main
-	header
-		h2 Editing Contact: '#{contact.firstname} #{contact.lastname}'
-		ul
-			form(action=`/contacts/${contact.id}/edit` method="post")
-				dt
-					.group
+	head
+		title Edit Contact
+	.container
+		.row.header
+			h2.addcontact Editing: #{contact.firstname} #{contact.lastname}
+		.row.body
+			form#add-contact-form(action=`/contacts/${contact.id}/edit` method="post")
+				ul
+					li
+						p
+							label(for='firstname')
+								| First name 
+								span.req *
+							input(type="text"
+										name="firstName"
+										value=`${contact.firstname}`)
+						p.pull-center
+							label(for='lastname')
+								| Last name 
+								span.req *
+							input(type="text"
+										name="lastName"
+										value=`${contact.lastname}`)
+						p
+							label(for='phoneNumber')
+								| Phone Number
+								span.req *
+							input(type="text"
+										name="phoneNumber"
+										value=`${contact.phonenumber}`)
+					li
+						p
+							label(for='birthday') Birthday
+								span.req *
+							input(name="birthday" 
+										type='text' 
+										onfocus="(this.type='date')" 
+										aria-labelledby='dateformat'
+										value=`${contact.birthday.toLocaleDateString()}`
+										placeholder= contact.birthday.toLocaleDateString()
+										min='1900-01-01' 
+										max= `${new Date().toISOString().split('T')[0]}`
+										)
+						p.pull-center
+							label(for='dob') Relationship 
+							select(type="text" id="category" name="category" )
+								option(value=contact.category default='')= contact.category
+								option(value='Friend') Friend
+								option(value='Family') Family
+								option(value='Co-Worker') Co-Worker
+								option(value='Acquaintance') Acquaintance
+								option(value='Other') Other
+					li
+						input.btn.btn-submit(type='submit' value='Submit')
+						a.btn.btn-cancel(href='/contacts') Cancel
+	//- header
+	//- 	h2 Editing Contact: '#{contact.firstname} #{contact.lastname}'
+	//- 	ul
+	//- 		form(action=`/contacts/${contact.id}/edit` method="post")
+	//- 			dt
+	//- 				.group
 						input.v2(type="text"
 									name="firstName"
 									value=` ${contact.firstname}`)
@@ -32,7 +87,7 @@ block main
 																		min='1900-01-01' 
 																		max= `${new Date().toISOString().split('T')[0]}`
 																		)
-				fieldset    
-					button.button(type="submit" value="Save" ) Save
-					button.cancelButton(formaction="/contacts" formmethod="get") Cancel
+	//- 			fieldset    
+	//- 				button.button(type="submit" value="Save" ) Save
+	//- 				button.cancelButton(formaction="/contacts" formmethod="get") Cancel
 
