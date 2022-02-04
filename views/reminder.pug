@@ -5,14 +5,6 @@ block main
     .row.header
       ul
         h2.addcontact Birthday Notification: #{contact.firstname} #{contact.lastname}
-        if user.testreminder === true
-          .row.body
-            form#add-contact-form(action=`/contacts/${contact.id}/sendTestReminder` method="post") 
-              ul
-                li
-                  label Single use:
-                    button(type="submit" value="Save") Send Email Reminder 
-                      i.fa.fa-send
         form#add-contact-form(action=`/contacts/${contact.id}/setReminder` method="post")
           ul
             li
@@ -28,8 +20,12 @@ block main
               label(for='monthReminder') 
                 span
                 | 30 Day reminder
-
           fieldset    
             button.btn.btn-submit(type="submit" value="Save" ) Save 
               i.fa.fa-save
             a.btn.btn-cancel(href='/contacts') Cancel
+          if user.testreminder === true
+            form#add-contact-form(action=`/contacts/${contact.id}/sendTestReminder` method="post") 
+              ul
+                button.btn.btn-submit(type="submit" value="Save") Send Test Reminder 
+                  i.fa.fa-send
