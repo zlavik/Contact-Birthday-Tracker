@@ -24,8 +24,8 @@ block main
             button.btn.btn-submit(type="submit" value="Save" ) Save 
               i.fa.fa-save
             a.btn.btn-cancel(href='/contacts') Cancel
-          if user.testreminder === true
-            form#add-contact-form(action=`/contacts/${contact.id}/sendTestReminder` method="post") 
-              ul
-                button.btn.btn-submit(type="submit" value="Save") Send Test Reminder 
-                  i.fa.fa-send
+        if user.testreminder === true
+          form#add-contact-form(action=`/contacts/${contact.id}/sendTestReminder` method="post") 
+            ul
+              button.btn.btn-submit(type="submit" value="Save") Send Test Reminder 
+                i.fa.fa-send
