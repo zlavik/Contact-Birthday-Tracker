@@ -92,10 +92,12 @@ const validateRelation = (relationship) => {
 const validateUsername = (username) => {
   return body(username)
   .trim()
-  .isLength({ min: 3 })
-  .withMessage("Username is required.")
+  .isLength({ min: 5 })
+  .withMessage("Username is too short. Must be at least 5 characters.")
   .isLength({ max: 20 })
   .withMessage(`Username is too long. Maximum length is 20 characters.`)
+  .matches(/^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$/,'g')
+  .withMessage("Enter a valid username.");
 }
 const validateEmail = (email) => {
   return body(email)
