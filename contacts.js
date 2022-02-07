@@ -115,7 +115,7 @@ const validatePassword = (password, password2) => {
     .withMessage("Password must be at least 8 characters long.")
     .isLength({ max: 50 })
     .withMessage(`Password is too long. Maximum length is 50 characters.`)
-    .matches(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,'g')
+    .matches(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*\_\-\+\=\[\]\{\}\\\|;:'",.<>\?/])/,'g')
     .withMessage("Password must contain a lowercase, uppercase, number, and a special character")
 
 }
