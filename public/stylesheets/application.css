@@ -260,6 +260,7 @@ nav ul {
   padding: 0;
   list-style: none;
   display: flex;
+  flex-direction: row-reverse;
 }
 
 nav li {
@@ -275,11 +276,13 @@ li.logo {
   overflow: hidden;
   transition: all .5s;
   font-weight: 600;
+  text-align: right
 }
 
 .fixed-nav li.logo {
   max-width: 500px;
   font-size: 18px;
+  text-align: right
 }
 
 li.logo a {
@@ -352,7 +355,7 @@ table {
   line-height: 16px;
 }
 th {
-  text-align: left;
+  text-align: right;
   font-weight: normal;
   font-size: 12px;
 }
