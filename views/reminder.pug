@@ -3,7 +3,7 @@ extends layout
 block main
   .container
     .row.header
-      ul
+      ul(style='text-align: center;')
         h2.addcontact Birthday Notification: #{contact.firstname} #{contact.lastname}
         form#add-contact-form(action=`/contacts/${contact.id}/setReminder` method="post")
           ul
