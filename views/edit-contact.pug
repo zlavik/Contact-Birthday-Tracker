@@ -4,7 +4,7 @@ block main
 	head
 		title Edit Contact
 	.container
-		.row.header
+		.row.header(style='text-align: center;')
 			h2.addcontact Editing: #{contact.firstname} #{contact.lastname}
 		.row.body
 			form#add-contact-form(action=`/contacts/${contact.id}/edit` method="post")
@@ -17,7 +17,7 @@ block main
 							input(type="text"
 										name="firstName"
 										value=`${contact.firstname}`)
-						p.pull-center
+						p
 							label(for='lastname')
 								| Last name 
 								span.req *
@@ -31,7 +31,6 @@ block main
 							input(type="text"
 										name="phoneNumber"
 										value=`${contact.phonenumber}`)
-					li
 						p
 							label(for='birthday') Birthday
 								span.req *
@@ -44,7 +43,7 @@ block main
 										min='1900-01-01' 
 										max= `${new Date().toISOString().split('T')[0]}`
 										)
-						p.pull-center
+						p
 							label(for='dob') Relationship 
 							select(type="text" id="category" name="category" )
 								option(value=contact.category default='')= contact.category
@@ -54,40 +53,5 @@ block main
 								option(value='Acquaintance') Acquaintance
 								option(value='Other') Other
 					li
-						input.btn.btn-submit(type='submit' value='Submit')
 						a.btn.btn-cancel(href='/contacts') Cancel
-	//- header
-	//- 	h2 Editing Contact: '#{contact.firstname} #{contact.lastname}'
-	//- 	ul
-	//- 		form(action=`/contacts/${contact.id}/edit` method="post")
-	//- 			dt
-	//- 				.group
-						input.v2(type="text"
-									name="firstName"
-									value=` ${contact.firstname}`)
-						input.v2(type="text"
-									name="lastName"
-									value=` ${contact.lastname}`)
-						input.v2(type="text"
-									name="phoneNumber"
-									value=` ${contact.phonenumber}`)
-						select.v2(type="text" id="category" name="category" )
-							option(value=contact.category default='')= contact.category
-							option(value='Friend') Friend
-							option(value='Family') Family
-							option(value='Co-Worker') Co-Worker
-							option(value='Acquaintance') Acquaintance
-							option(value='Other') Other
-						input.v2#date.form-control(name="birthday" 
-																		type='text' 
-																		onfocus="(this.type='date')" 
-																		onblur="(this.type='text')"
-																		value=` ${contact.birthday.toDateString()}`
-																		placeholder="Contact's birthday"
-																		min='1900-01-01' 
-																		max= `${new Date().toISOString().split('T')[0]}`
-																		)
-	//- 			fieldset    
-	//- 				button.button(type="submit" value="Save" ) Save
-	//- 				button.cancelButton(formaction="/contacts" formmethod="get") Cancel
-
+						input.btn.btn-submit(type='submit' value='Submit')
