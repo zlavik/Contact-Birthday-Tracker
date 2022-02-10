@@ -9,8 +9,8 @@ block main
       input(type='password' name='password' placeholder='Password' value=password)
       input.login.login-submit(type='submit' name='login' value='Login')
     .login-help
-      a(href='/register') Register
-      //- |  &bull; 
-      //- a(href='#') Forgot Password
+      | Don't have an account? 
+      a(href='/register' style='color: #ff5151;') Register
+      a(href='/lost-password') Lost your password?
 
 
