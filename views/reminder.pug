@@ -7,7 +7,7 @@ block main
         h2.addcontact Birthday Notification: #{contact.firstname} #{contact.lastname}
         form#add-contact-form(action=`/contacts/${contact.id}/setReminder` method="post")
           ul
-            li
+            li.reminderchoice
               input#dayReminder(type='checkbox' name='day' value='true' checked=JSON.parse(contact.dayreminder) )
               label(for='dayReminder') 
                 span
@@ -20,12 +20,11 @@ block main
               label(for='monthReminder') 
                 span
                 | 30 Day reminder
-          fieldset    
+          fieldset.reminderbuttons    
             button.btn.btn-submit(type="submit" value="Save" ) Save 
               i.fa.fa-save
             a.btn.btn-cancel(href='/contacts') Cancel
         if user.testreminder === true
-          form#add-contact-form(action=`/contacts/${contact.id}/sendTestReminder` method="post") 
-            ul
-              button.btn.btn-submit(type="submit" value="Save") Send Test Reminder 
-                i.fa.fa-send
+          form.reminderbuttons(action=`/contacts/${contact.id}/sendTestReminder` method="post") 
+            button.btn.btn-submit(type="submit" value="Save") Send Test Reminder 
+              i.fa.fa-send
