@@ -55,11 +55,12 @@ input, select {
   margin-bottom: 15px;
 }
 
+
+
 h2 {
   font-size: 2rem;
   margin: auto;
   width: 60%;
-  border: 3px solid #51554b;
   padding: 10px;
   color: rgb(33, 32, 39);
 }
@@ -72,6 +73,19 @@ input:focus, select:focus {
   border-right: solid 1px #e6e6e6;
   border-bottom: solid 1px #e6e6e6;
   border-left: solid 1px #aaa;
+}
+
+.reminderchoice {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.reminderbuttons {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: row-reverse;
 }
 
 .btn {
@@ -106,7 +120,6 @@ th {
 }
 td {
   padding: 10px 10px;
-  border: solid 1px rgba(255, 255, 255, 0.1);
 }
 
 h1 {
@@ -369,6 +382,7 @@ button {
   color: inherit;
   border-radius: 0;
   cursor: pointer;
+  padding-left: 0px;
 }
 .number {
   width: 1%;
@@ -407,6 +421,7 @@ button {
 .table-list tbody td {
   white-space: nowrap;
   padding: 9px;
+  padding-left: 20px;
   vertical-align: top;
   height: 35px;
 }
@@ -477,7 +492,7 @@ tr:last-child td {
   padding: 0;
 }
 .table-filter {
-  float: right;
+  
 }
 
 .table-filter .search {
@@ -535,12 +550,10 @@ a.button {
   -webkit-appearance: button;
   -moz-appearance: button;
   appearance: button;
-
   text-decoration: none;
   color: #aaa;
+  padding: 10px;
 }
-
-
 
 div, textarea, input, select {
   -webkit-box-sizing: border-box;
@@ -585,11 +598,20 @@ div, textarea, input, select {
   font-family: 'Lato', sans-serif;
   font-weight: 300;
 }
+.fa-bell:before {
+  content: "\f0f3";
+  padding-right: 10px;
+  padding-left: 10px;
+}
 .btn:hover {
   background-color: #bfbfbf;
 }
 .btn.btn-submit {
   background-color: #4f6fad;
+  padding: 0.74em 1.5em;
+  text-decoration: none;
+  margin: 1.5em;
+
 }
 
 .btn.btn-submit:hover {
@@ -619,7 +641,8 @@ form ul {
 form ul li {
   margin: 0 0 0.25em 0;
   clear: both;
-  display: inline-block;
+  display: flex;
+  justify-content: center;
   width: 100%;
 }
 form ul li:last-child {
@@ -646,7 +669,7 @@ form .error {
   color: #ee9cb4;
 }
 form input, select {
-  margin: 0 0 0.5em 0;
+  margin: 1 0 0.5em 0;
   border: 1px solid #cccccc;
   padding: 6px 10px;
   color: #555555;
