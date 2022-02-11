@@ -5,12 +5,13 @@ const flash = require("express-flash");
 const session = require("express-session");
 const { body, validationResult } = require("express-validator");
 const { sendMail } = require("./lib/courier");
-const { findDaysUntilBirthday } = require("./lib/helperFunctions")
+const { findDaysUntilBirthday, generatePassword } = require("./lib/helperFunctions")
 const store = require("connect-loki");
 const { CronJob } = require("cron");
 const { queryAlerts } = require("./lib/notify");
 const PgPersistence = require("./lib/pg-persistence");
 const catchError = require("./lib/catch-error");
+const crypto = require('crypto');
 
 
 const app = express();
@@ -151,10 +152,33 @@ app.get("/register", (req, res) => {
   });
 });
 
-app.get("/lost-password", (req, res) => {
-  res.render("recover-password", {
+app.get("/forgot-password", (req, res) => {
+  res.render("signin", {
     flash: req.flash(),
   });
+});
+
+app.post(`/forgotpassword`, (req, res) => {
+  catchError(async (req, res) => {
+    let username = req.body.username.trim();
+    let email = req.body.email.trim();
+    let tempPassword = generatePassword();
+
+    // let validUser = await res.locals.store.checkUserAndEmailExists(username, email);
+    // if (validUser) {
+    //   await res.locals.store.updatePassword(username, tempPassword);
+    //   sendTempPassword(username, email, tempPassword);
+    // }
+    
+    if (!validUser) {
+      req.flash("info", "If the information provided is correct, you should receive an email with a temporary password.");
+      res.render("home", {
+        flash: req.flash(),
+      });
+    } else {
+      res.redirect("/");
+    }
+  })
 })
 
 // Handle Sign In form submission
@@ -165,7 +189,7 @@ app.post("/signin",
 
     let authenticated = await res.locals.store.authenticate(username, password);
     if (!authenticated) {
-      req.flash("error", "Invalid credentials.");
+      req.flash("error", "Invalid Username or Password.");
       res.render("signin", {
         flash: req.flash(),
         username: req.body.username,

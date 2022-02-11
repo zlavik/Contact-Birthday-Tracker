@@ -2,11 +2,10 @@ extends layout
 
 block main
   #form_container
-    
     form.signin-form#login2(action=`/signin` method="post")
       h1 Sign in
-      input(type='text' name='username'  placeholder='Username' value=username)
-      input(type='password' name='password' placeholder='Password' value=password)
+      input(type='text' name='username'  placeholder='Username' value=username required='')
+      input(type='password' name='password' placeholder='Password' value=password required='')
       input.btn.btn-submit(type='submit' value='Sign In')
       #link_container
         a#register2(href='#')
@@ -14,10 +13,10 @@ block main
         a#forgot(href='#')
           | Forgot your password?
 
-    form.signin-form#forgot(action=`/forgot-password` method="post")
+    form.signin-form#forgot(action=`/forgotpassword` method="post")
       h1 Reset
-      input(type='text' name='username'  placeholder='Username' value=username)
-      input(type='email' name='email'  placeholder='Email' value=email)
+      input(type='text' name='username'  placeholder='Username'  required='')
+      input(type='email' name='email'  placeholder='Email' required='')
       input.btn.btn-submit(type='submit' value='Recover Password')
       #link_container
         a#login2(href='#')
