@@ -1,13 +1,75 @@
 extends layout
 
 block main
-  .login-card
-    h1 Register
-    br
-    form(action=`/register` method="post")
+  #form_container
+    
+    form.signin-form#login2(action=`/signin` method="post")
+      h1 Sign in
+      input(type='text' name='username'  placeholder='Username' value=username)
+      input(type='password' name='password' placeholder='Password' value=password)
+      input.btn.btn-submit(type='submit' value='Sign In')
+      #link_container
+        a#register2(href='#')
+          | Don't have an account?
+        a#forgot(href='#')
+          | Forgot your password?
+
+    form.signin-form#forgot(action=`/forgot-password` method="post")
+      h1 Reset
+      input(type='text' name='username'  placeholder='Username' value=username)
+      input(type='email' name='email'  placeholder='Email' value=email)
+      input.btn.btn-submit(type='submit' value='Recover Password')
+      #link_container
+        a#login2(href='#')
+          | Back to login
+          span.icn &#x27A5;
+
+
+    form.signin-form#register2(action=`/register` method="post")
+      h1 Register
       input(type="text" name="username"  placeholder='Username' value=username required='')
       input(type="password" name="password" placeholder='Password' value=password required='')
       input(type="password" name="password2" placeholder='Confirm Password' value=password2 required='')
       input(type="email" name="email" placeholder='Email' value=email required='')
-      input.login.login-submit(type='submit' name='register' value='Create Account')
-      a.button(href=`/signin` style='display:flex; justify-content: space-around;') cancel
+      input.btn.btn-submit(type='submit' value='Create Account')
+      #link_container
+        a#login2(href='#')
+          | Already have an account?
+
+
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js')
+  script.
+    //click on forgot password
+    $(document).on('click','a#forgot',function(e){
+      e.preventDefault();
+      $('form#forgot').css('bottom','5px'); // loads forgot form     
+      $('form#login2').css('bottom','-900px');
+
+      $(this).fadeOut('fast',function(){
+        $('a#login2').fadeIn('fast');
+      });
+    });
+    
+    //click on already have an account
+    $(document).on('click','a#login2',function(e){
+      e.preventDefault();
+      $('form#login2').css('bottom','5px');
+      $('form#forgot').css('bottom','-800px');
+      $('form#register2').css('top','-900px');
+      $(this).fadeOut('fast',function(){
+        $('a#forgot').fadeIn('fast');
+        $('a#register2').fadeIn('fast');
+      });
+    });
+
+    //click on dont have account on
+    $(document).on('click','a#register2',function(e){
+      e.preventDefault();
+      $('form#login2').css('bottom','-900px');
+      $('form#register2').css('top','5px');
+
+      $(this).fadeOut('fast',function(){
+        $('a#login2').fadeIn('fast');
+        $('a#forgot').fadeIn('fast');
+      });
+    });

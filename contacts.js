@@ -151,6 +151,12 @@ app.get("/register", (req, res) => {
   });
 });
 
+app.get("/lost-password", (req, res) => {
+  res.render("recover-password", {
+    flash: req.flash(),
+  });
+})
+
 // Handle Sign In form submission
 app.post("/signin",
   catchError(async (req, res) => {

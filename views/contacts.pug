@@ -6,7 +6,9 @@ block main
       h1 Contacts
     if contacts === undefined || contacts.length === 0
       table
-        h2 You don't have any contacts. Why not add one? 
+        h2 
+          small
+            | You don't have any contacts. Why not add one? 
           a.button(href=`/contacts/new`) New Contact 
             i.fa.fa-address-card-o
     else

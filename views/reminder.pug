@@ -21,10 +21,10 @@ block main
                 span
                 | 30 Day reminder
           fieldset.reminderbuttons    
-            button.btn.btn-submit(type="submit" value="Save" ) Save 
-              i.fa.fa-save
+            input.btn.btn-submit(type='submit' value='Save')
             a.btn.btn-cancel(href='/contacts') Cancel
         if user.testreminder === true
           form.reminderbuttons(action=`/contacts/${contact.id}/sendTestReminder` method="post") 
-            button.btn.btn-submit(type="submit" value="Save") Send Test Reminder 
-              i.fa.fa-send
+            input.btn.btn-submit(type="submit" value="Send a test reminder")
+
+

@@ -80,6 +80,7 @@ input:focus, select:focus {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  padding: 25px;
 }
 
 .reminderbuttons {
@@ -318,6 +319,7 @@ nav a:hover {
 
 span {
   color: #ff5274;
+  font-size: 20px;
 }
 img {
   width: 100%; 
@@ -439,6 +441,7 @@ tr:last-child td {
   width: 100%;
   color: #a0a0a0;
   line-height: 14px;
+  font-size: 15px;
 }
 
 .sort.textcenter {
@@ -575,6 +578,7 @@ div, textarea, input, select {
   padding: 0 2.5em;
 }
 .row.header {
+  
   padding: 1.5em 2.5em;
   color: white;
 }
@@ -611,24 +615,15 @@ div, textarea, input, select {
   background-color: #4f6fad;
   padding: 0.74em 1.5em;
   text-decoration: none;
-  margin: 1.5em;
-
+  margin-bottom: 5px;
+  
 }
 
 .btn.btn-submit:hover {
   background-color: #5f7db6;
 }
 
-.btn.btn-cancel {
-  padding: 0.74em 1.5em;
-  text-decoration: none;
-  margin: 1.5em;
-  background-color: #ad4f4f9b;
-}
 
-.btn.btn-cancel:hover {
-  background-color: #c06b6b9b;
-}
 
 form {
   max-width: 100%;
@@ -722,7 +717,6 @@ form textarea {
 
 
 .login-card {
-  padding: 40px;
   width: 274px;
   margin: 0 auto 10px;
   border-radius: 2px;
@@ -744,7 +738,6 @@ form textarea {
 
 .login-card input[type=text], input[type=password], input[type=email] {
   height: 44px;
-  font-size: 16px;
   width: 100%;
   margin-bottom: 10px;
   -webkit-appearance: none;
@@ -815,17 +808,12 @@ form textarea {
 }
 
 
-
-
-
-
-
 input[type="checkbox"] {
   display:none;
 }
 h2 small { 
   font-weight:normal; 
-  color:rgb(32, 28, 28); 
+  color:#ff5274; 
   margin: 0 5%;
   display:block; 
 }
@@ -870,3 +858,128 @@ input[type="radio"]:checked + label span {
   background:url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/check_radio_sheet.png) -57px top no-repeat;
 }
 
+*{
+  box-sizing:border-box;
+  font-size:13px;
+}
+
+div#form_container {
+  width:295px;
+  height: 400px;
+  padding-top:10px;
+  margin:50px auto 10px;
+  overflow:hidden;
+  position:relative; 		
+}
+
+
+.signin-form {
+  position:absolute;
+  width:290px;
+  height:430px;
+  padding:25px;
+  transition:all 0.3s ease-out;
+}
+
+form#login {
+  top:10px;
+}
+
+form#forgot{
+  bottom:-800px;
+}
+
+form#register{
+  bottom:-900px;
+}
+
+form#register2 {
+  top:10px;
+}
+
+form#login2 {
+  bottom:-900px;
+}
+
+input[type="text"],input[type="password"],input[type="email"] {
+  width:240px;
+  height:38px;
+  margin-bottom:3px;
+  border:1px solid #2e2e38;
+  background:white;
+  color:#9d9da5;
+  box-shadow:inset 0px 0px 10px #ccc;
+  border-radius:5px;
+  padding:15px;
+  outline:none;
+}
+
+input[type="submit"], .btn.btn-cancel {
+
+
+  margin-top:6px;
+  color:white;
+  text-shadow:0 -1px 1px #5794a9;
+  width:240px;
+  height:40px;
+  border-radius:5px;
+  padding:10px 0 15px;
+  border:1px solid #2e2e38;
+  cursor:pointer;
+}
+
+input[type="submit"]:active, .btn.btn-cancel:active {
+
+
+text-shadow:0 1px 1px #5794a9;
+color:#eeeeee;
+}
+
+div#link_container {
+  width:170px;
+  margin:0 auto;
+  text-align:center;
+}
+div#link_container a {
+  color:#acaebb;
+  font-family:helvetica,arial,sans-serif;
+  font-size:14px;
+  text-decoration:none;
+  font-weight:100;
+  text-shadow:1px -1px 1px #2a2a32;
+}
+div#link_container a:hover {
+  color:#ff5274;
+
+}
+
+div#link_container a strong {
+  font-weight:400;
+}
+div#link_container a span.icn {
+  display:inline-block;
+  margin-left:5px;
+  transform:rotate(-90deg);
+}
+div#link_container a#back {
+  display:none;
+}
+
+.btn.btn-cancel {
+  padding: 0.74em 1.5em;
+  text-decoration: none;
+  margin-right: 5px;
+  display: flex;
+  justify-content: space-around;
+  background-color: #ad4f4f9b;
+}
+
+.btn.btn-cancel:hover {
+  background-color: #c06b6b9b;
+}
+
+.registerform {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

@@ -4,8 +4,8 @@ block main
   head
     title Add Contact
   .container
-    .row.header
-      h1.addcontact ADD CONTACT
+    .row.header(style='text-align: center;')
+      h2.addcontact ADD CONTACT
     .row.body
       form#add-contact-form(action="/contacts/new" method="post")
         ul

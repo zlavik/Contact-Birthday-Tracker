@@ -5,7 +5,9 @@ block main
 		title Edit Contact
 	.container
 		.row.header(style='text-align: center;')
-			h2.addcontact Editing: #{contact.firstname} #{contact.lastname}
+			h2.addcontact
+				small 
+				| #{contact.firstname} #{contact.lastname}
 		.row.body
 			form#add-contact-form(action=`/contacts/${contact.id}/edit` method="post")
 				ul
