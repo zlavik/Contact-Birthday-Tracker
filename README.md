@@ -20,6 +20,7 @@ Contact List
  - Sort
 
 Send Emails
+ - Each account gets 1 test send for any contact
  - Birthday reminders sent 30/7/1 days away from contacts birthday
  - Reset Passwords
 
