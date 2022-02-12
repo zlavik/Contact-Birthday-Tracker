@@ -4,8 +4,11 @@ const morgan = require("morgan");
 const flash = require("express-flash");
 const session = require("express-session");
 const { body, validationResult } = require("express-validator");
-const { sendMail } = require("./lib/courier");
-const { findDaysUntilBirthday, generatePassword } = require("./lib/helperFunctions")
+const { sendMail, sendTempPassword } = require("./lib/courier");
+const { findDaysUntilBirthday,
+        generatePassword,
+        formatPhoneNumber,
+        capitalizeName } = require("./lib/helperFunctions")
 const store = require("connect-loki");
 const { CronJob } = require("cron");
 const { queryAlerts } = require("./lib/notify");
@@ -109,7 +112,7 @@ const validateEmail = (email) => {
   .matches(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
   .withMessage("Enter a valid email address.");
 }
-const validatePassword = (password, password2) => {
+const validatePassword = (password) => {
   return body(password)
     .trim()
     .isLength({ min: 8 })
@@ -130,56 +133,19 @@ const requiresAuthentication = (req, res, next) => {
   }
 };
 
-
-
+//Render home page
 app.get("/", (req, res) => {
   res.render("home", {
     signedIn : res.locals.signedIn,
   });
-})
+});
 
-// Render the Sign In page.
+// Renders the Sign In page.
 app.get("/signin", (req, res) => {
   res.render("signin", {
     flash: req.flash(),
   });
 });
-
-// Render the register page.
-app.get("/register", (req, res) => {
-  res.render("register", {
-    flash: req.flash(),
-  });
-});
-
-app.get("/forgot-password", (req, res) => {
-  res.render("signin", {
-    flash: req.flash(),
-  });
-});
-
-app.post(`/forgotpassword`, (req, res) => {
-  catchError(async (req, res) => {
-    let username = req.body.username.trim();
-    let email = req.body.email.trim();
-    let tempPassword = generatePassword();
-
-    // let validUser = await res.locals.store.checkUserAndEmailExists(username, email);
-    // if (validUser) {
-    //   await res.locals.store.updatePassword(username, tempPassword);
-    //   sendTempPassword(username, email, tempPassword);
-    // }
-    
-    if (!validUser) {
-      req.flash("info", "If the information provided is correct, you should receive an email with a temporary password.");
-      res.render("home", {
-        flash: req.flash(),
-      });
-    } else {
-      res.redirect("/");
-    }
-  })
-})
 
 // Handle Sign In form submission
 app.post("/signin",
@@ -203,7 +169,33 @@ app.post("/signin",
   })
 );
 
-// Handle Register form submission
+// Handles forgot password
+app.post(`/forgotpassword`,
+  catchError(async (req, res) => {
+    let username = req.body.username.trim();
+    let email = req.body.email.trim();
+    let tempPassword = generatePassword();
+    let validUser = await res.locals.store.checkUserAndEmailExists(username, email);
+    req.flash("info", "If the information provided is correct, you should receive an email with a temporary password.");
+
+    if (validUser) {
+      await res.locals.store.updatePassword(username, tempPassword);
+      sendTempPassword(username, email, tempPassword);
+      res.redirect("/");
+    } else {
+      res.redirect("/");
+    }
+  })
+);
+
+// Renders register page.
+app.get("/register", (req, res) => {
+  res.render("register", {
+    flash: req.flash(),
+  });
+});
+
+// Handles Register form submission
 app.post("/register",
   [
     validatePassword('password', 'password2'),
@@ -244,13 +236,6 @@ app.post("/register",
   })
 );
 
-// Handle Sign Out
-app.post("/users/signout", (req, res) => {
-  delete req.session.username;
-  delete req.session.signedIn;
-  res.redirect("/signin");
-});
-
 // Renders contact page
 app.get("/contacts",
   requiresAuthentication,
@@ -268,15 +253,6 @@ app.get("/contacts",
 app.get("/contacts/new", (req, res) => {
   res.render("new-contact");
 });
-
-// Formats unformated phone number
-const formatPhoneNumber = (number) => {
-  return number.length === 12 ? number : [...String(number)].map((digit, idx) => {
-    return idx === 3 || idx === 6 ? `-${digit}` : digit;
-    }).join('');
-}
-
-const capitalizeName = (name) => name.charAt(0).toUpperCase() + name.slice(1);
 
 // Handles adding a new contact
 app.post("/contacts/new",
@@ -316,7 +292,7 @@ app.post("/contacts/new",
   })
 );
 
-// Render edit contact form
+// Renders edit contact form
 app.get("/contacts/:contactId/edit",
   catchError(async (req, res) => {
     let contactId = req.params.contactId;
@@ -327,7 +303,7 @@ app.get("/contacts/:contactId/edit",
   })
 );
 
-// Edit contact
+// Handles editing a contact
 app.post("/contacts/:contactId/edit",
   requiresAuthentication,
   [
@@ -382,7 +358,7 @@ app.post("/contacts/:contactId/edit",
   })
 );
 
-// Delete contact
+// Handles deleting a contact
 app.post("/contacts/:contactID/destroy",
   requiresAuthentication,
   catchError(async (req, res, next) => {
@@ -409,7 +385,7 @@ app.post(`/contacts/:contactID/setReminder`,
       req.flash("success", "Preference set set successfully");
       res.redirect("/contacts");
     })
-)
+);
 
 // handles sending a test reminder for testing purposes
 app.post('/contacts/:contactID/sendTestReminder', 
@@ -433,7 +409,7 @@ app.post('/contacts/:contactID/sendTestReminder',
 
     })
 
-)
+);
 
 // renders contact reminder page
 app.get("/contacts/:contactID/reminder", 
@@ -448,7 +424,47 @@ app.get("/contacts/:contactID/reminder",
       user
      });
   })
-)
+);
+
+// renders setting page
+app.get("/setting", 
+  requiresAuthentication,
+  catchError(async (req, res) => {
+    let userInfo = await res.locals.store.loadUser();
+    if (!userInfo) throw new Error("Not found.");
+    res.render("edit-user", { userInfo });
+  })
+);
+
+// Handles resetting password
+app.post("/password-reset",
+  requiresAuthentication,
+  [
+    validatePassword('newPassword'),
+  ],
+  catchError(async (req, res) => {
+    let errors = validationResult(req);
+    let currentPassword = req.body.currentPassword;
+    let username = res.locals.username;
+    let newPassword = req.body.newPassword;
+    let newPasswordConfirm = req.body.newPasswordConfirm;
+
+    let validCurrentPassword = await res.locals.store.authenticate(username, currentPassword);
+    let validNewPassword = newPassword === newPasswordConfirm;
+    console.log(username)
+    if (!errors.isEmpty() || !validCurrentPassword || !validNewPassword) {
+      errors.array().forEach(message => req.flash("error", message.msg));
+      if (!validCurrentPassword) req.flash("error", "Current password does not match our records!");
+      if (!validNewPassword) req.flash('error', 'Passwords must match');
+      res.redirect("/setting");
+    } else {
+      await res.locals.store.updatePassword(username, newPassword);
+      req.flash("success", "Password has been updated successfully!");
+      res.redirect("/contacts");
+    }
+
+  })
+);
 
 // Handles editing preferences for all contacts
 app.post(`/setting/edit`, 
@@ -460,19 +476,39 @@ app.post(`/setting/edit`,
       let reminderPreferenceSetAll = await res.locals.store.setReminderPreferenceAll(dayPref, weekPref, monthPref);
       if (!reminderPreferenceSetAll) throw new Error("Error");
       req.flash("success", "Preference set set for all contacts successfully");
-      res.redirect("/contacts");
+      res.redirect("/setting");
     })
-)
+);
 
-// renders setting page
-app.get("/setting", 
+// Handles deleting account
+app.post('/account-delete', 
   requiresAuthentication,
   catchError(async (req, res) => {
-    let userInfo = await res.locals.store.loadUser();
-    if (!userInfo) throw new Error("Not found.");
-    res.render("edit-user", { userInfo });
+    let username = req.body.username.trim();
+    let password = req.body.password;
+    let acknowledged = req.body.acknowledge;
+    let validUser = await res.locals.store.authenticate(username, password);
+
+    if (acknowledged && validUser) {
+      await res.locals.store.deleteAccount(username);
+      delete req.session.username;
+      delete req.session.signedIn;
+      req.flash('success', 'Account deleted!');
+      res.redirect("/");
+    } else {
+      if (!validUser) req.flash('error', 'Incorrect user information');
+      if (!acknowledged) req.flash('error', 'Must acknowledge by clicking on "I agree"');
+      res.redirect("/setting");     
+    }
   })
-)
+) 
+
+// Handle Sign Out
+app.post("/users/signout", (req, res) => {
+  delete req.session.username;
+  delete req.session.signedIn;
+  res.redirect("/signin");
+});
 
 // gets daily alerts at 8 am PST.
 const getDailyAlerts = new CronJob(
@@ -482,7 +518,7 @@ const getDailyAlerts = new CronJob(
   false,
   'America/Los_Angeles',
 );
-// sends alerts at 8am every day.
+// Sends alerts at 8am every day.
 getDailyAlerts.start();
 
 // Error handler
