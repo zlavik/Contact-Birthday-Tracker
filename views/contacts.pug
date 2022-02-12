@@ -3,7 +3,7 @@ extends layout
 block main
   #tableID
     div
-      h1 Contacts
+      h2 Contacts
     if contacts === undefined || contacts.length === 0
       table
         h2 
@@ -23,18 +23,17 @@ block main
               | Last Name
               i.caret
           th
-            button.sort(type='button' data-sort='birthday')
-              | Birthday
-              i.caret
-          th
             button.sort(type='button' data-sort='relationship')
               | Relationship
+              i.caret
+          th
+            button.sort(type='button' data-sort='birthday')
+              | Birthday
               i.caret
           th
             p.sort
               | Action
               i.caret
-        // IMPORTANT, class="list" must be on tbody
         tbody.list
           each contact in contacts
             tr
