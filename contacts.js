@@ -172,15 +172,14 @@ app.post("/signin",
 // Handles forgot password
 app.post(`/forgotpassword`,
   catchError(async (req, res) => {
-    let username = req.body.username.trim();
     let email = req.body.email.trim();
     let tempPassword = generatePassword();
-    let validUser = await res.locals.store.checkUserAndEmailExists(username, email);
+    let validUser = await res.locals.store.checkEmailExists(email);
+    let username = await res.locals.store.findUsername(email);
     req.flash("info", "If the information provided is correct, you should receive an email with a temporary password.");
-
     if (validUser) {
-      await res.locals.store.updatePassword(username, tempPassword);
-      sendTempPassword(username, email, tempPassword);
+      await res.locals.store.updatePassword(username.username, tempPassword);
+      sendTempPassword(username.username, email, tempPassword);
       res.redirect("/");
     } else {
       res.redirect("/");

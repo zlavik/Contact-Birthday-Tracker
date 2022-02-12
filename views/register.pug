@@ -15,7 +15,6 @@ block main
 
     form.signin-form#forgot(action=`/forgotpassword` method="post")
       h1 Reset
-      input(type='text' name='username'  placeholder='Username'  required='')
       input(type='email' name='email'  placeholder='Email' required='')
       input.btn.btn-submit(type='submit' value='Recover Password')
       #link_container
