@@ -1,5 +1,5 @@
 # Contact birthday reminder app
-Link to see it in action: https://birthday-nudge.herokuapp.com/
+Live Link: https://birthday-nudge.herokuapp.com/
 
 # Features
 Account system 
