@@ -1,26 +1,192 @@
 extends layout
-
 block main
-  .container
-    .row.header
-      ul(style='text-align: center;')
-        h2.addcontact Set reminders for all:
-        form#add-contact-form(action=`/setting/edit` method="post")
+  link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css')
+  style.
+    body {
+      background-color:#333;
+    }
+    .nav-tabs .nav-link.active {
+      color: white;
+      background-color: #333;
+      border-bottom: 1px solid #ff5274
+    }
+    .nav-tabs .nav-link {
+      border: 0px solid transparent;
+      color: white;
+    }
+
+    .nav-tabs {
+      border-bottom: 0px solid #dee2e6;
+      
+    }
+
+    .nav-link.active:hover {
+      color: #fab9b9;
+    }
+    .nav-link:hover{
+      color: #fab9b9;
+    }
+
+    .btn.btn-cancel, .btn.btn-submit {
+      font-size: 12px;
+    }
+
+    form ul li p {
+      color: white;
+      margin-right: 1rem;
+      margin-left: 0.5rem;
+    }
+    .centerTitle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  ul#myTab.nav.nav-tabs
+    li.nav-item
+      a.nav-link.active(href='#sectionA' data-toggle='tab') All reminders
+    li.nav-item
+      a.nav-link(href='#sectionB' data-toggle='tab') Password Reset
+    li.nav-item
+      a.nav-link(href='#sectionC' data-toggle='tab') Delete Account
+  .tab-content
+    #sectionA.tab-pane.fade.show.active
+      .profile-body
+        .profile-reminder.tab
+          h1 Set all current contacts reminders to:
+          form#add-contact-form(action=`/setting/edit` method="post")
+            ul
+              li.reminderchoice
+                input#dayReminder(type='checkbox' name='day' value='true' checked=JSON.parse(userInfo.dayreminder) )
+                label(for='dayReminder') 
+                  span
+                  | 1 Day reminder
+                input#weekReminder(type='checkbox' name='week' value='true' checked=JSON.parse(userInfo.weekreminder))
+                label(for='weekReminder') 
+                  span
+                  | 7 Day reminder              
+                input#monthReminder(type='checkbox' name='month' value='true' checked=JSON.parse(userInfo.monthreminder))
+                label(for='monthReminder') 
+                  span
+                  | 30 Day reminder
+            fieldset.reminderbuttons 
+              input.btn.btn-submit(type='submit' value='Submit')
+              a.btn.btn-cancel(href='/contacts') Cancel
+    #sectionB.tab-pane.fade
+      h1 Password Reset
+      form(action=`/password-reset` method="post")
+        ul
+          li
+            p Enter Current Password
+          li
+            input(type="password" name="currentPassword" placeholder='Current Password' value=currentPassword required='')
+          li
+            p Enter New Password
+          li
+            input(type="password" name="newPassword" placeholder='New Password' style='margin-right:1px;' value=newPassword required='')
+            input(type="password" name="newPasswordConfirm" placeholder='Confirm New Password' value=newPasswordConfirm required='')
+          li
+            a.btn.btn-cancel(href='/contacts' style='margin-right:1px;') Cancel
+            input.btn.btn-submit(type='submit' value='Reset Password')
+    #sectionC.tab-pane.fade
+        h1 Delete Account
+        form.centerTitle(action=`/account-delete` method="post")
           ul
-            li.reminderchoice
-              input#dayReminder(type='checkbox' name='day' value='true' checked=JSON.parse(userInfo.dayreminder) )
-              label(for='dayReminder') 
+            li(style="justify-content: flex-start;")
+              p Enter Username
+            li
+              input(type="text" name="username" placeholder='Username' required='')
+            li(style="justify-content: flex-start;")
+              p Enter Password
+            li 
+              input(type="password" name="password" placeholder='Password' required='')
+            li
+              input#acknowledge(type='checkbox' name='acknowledge' )
+              label(for='acknowledge') 
                 span
-                | 1 Day reminder
-              input#weekReminder(type='checkbox' name='week' value='true' checked=JSON.parse(userInfo.weekreminder))
-              label(for='weekReminder') 
-                span
-                | 7 Day reminder              
-              input#monthReminder(type='checkbox' name='month' value='true' checked=JSON.parse(userInfo.monthreminder))
-              label(for='monthReminder') 
-                span
-                | 30 Day reminder
+                | Yes I want to delete my account
           fieldset.reminderbuttons 
-            input.btn.btn-submit(type='submit' value='Submit')
-            a.btn.btn-cancel(href='/contacts') Cancel
-        
+            input.btn.btn-submit(type='submit' value='DELETE ACCOUNT' style='background-color: #ad4f4f9b')
+            a.btn.btn-cancel(href='/contacts' style='background-color: #4f6fad;') Cancel
+            
+  //- .container
+    .main-bd
+      .right-side
+        h2 Setting
+        .nav
+          ul
+            li.user-reminder.active(onclick='tabs(0)') All reminders
+            li.user-reset(onclick='tabs(1)') Password Reset
+            li.user-delete(onclick='tabs(2)')  Delete Account
+        .profile-body
+          .profile-reminder.tab
+            h1 Set all current contacts reminders to:
+            form#add-contact-form(action=`/setting/edit` method="post")
+              ul
+                li.reminderchoice
+                  input#dayReminder(type='checkbox' name='day' value='true' checked=JSON.parse(userInfo.dayreminder) )
+                  label(for='dayReminder') 
+                    span
+                    | 1 Day reminder
+                  input#weekReminder(type='checkbox' name='week' value='true' checked=JSON.parse(userInfo.weekreminder))
+                  label(for='weekReminder') 
+                    span
+                    | 7 Day reminder              
+                  input#monthReminder(type='checkbox' name='month' value='true' checked=JSON.parse(userInfo.monthreminder))
+                  label(for='monthReminder') 
+                    span
+                    | 30 Day reminder
+              fieldset.reminderbuttons 
+                input.btn.btn-submit(type='submit' value='Submit')
+                a.btn.btn-cancel(href='/contacts') Cancel
+          .profile-reset.tab
+            h1 Password Reset
+            form(action=`/password-reset` method="post")
+              ul
+                li
+                  input(type="password" name="oldPassword" placeholder='Current Password' value=password style="width: 100%;" required='')
+                li
+                  input(type="password" name="newPassword" placeholder='New Password' style='margin-right:1px;' value=password required='')
+                  input(type="password" name="newPasswordConfirm" placeholder='Confirm New Password' value=password2 required='')
+                li(style='justify-content: flex-start;')
+                  a.btn.btn-cancel(href='/contacts' style='margin-right:1px;') Cancel
+                  input.btn.btn-submit(type='submit' value='Reset Password')
+          .profile-delete.tab
+            .account-setting
+              h1 Delete Account
+
+
+  
+
+  script(src='https://code.jquery.com/jquery-3.5.1.min.js')
+  script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js')
+  script.
+
+    $(".nav ul li").click(function() {
+    $(this)
+      .addClass("active")
+      .siblings()
+      .removeClass("active");
+    });
+
+    const tabBtn = document.querySelectorAll(".nav ul li");
+    const tab = document.querySelectorAll(".tab");
+
+    function tabs(panelIndex) {
+      tab.forEach(function(node) {
+        node.style.display = "none";
+      });
+      tab[panelIndex].style.display = "block";
+    }
+
+    tabs(0);
+
+    $(document).ready(function(){
+      $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+      localStorage.setItem('activeTab', $(e.target).attr('href'));
+      });
+      var activeTab = localStorage.getItem('activeTab');
+      if(activeTab){
+      $('#myTab a[href="' + activeTab + '"]').tab('show');
+      }
+    });
+
