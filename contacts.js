@@ -496,7 +496,7 @@ app.post('/account-delete',
       res.redirect("/");
     } else {
       if (!validUser) req.flash('error', 'Incorrect user information');
-      if (!acknowledged) req.flash('error', 'Must acknowledge by clicking on "I agree"');
+      if (!acknowledged) req.flash('error', 'Must acknowledge by clicking on "Yes I want to delete my account"');
       res.redirect("/setting");     
     }
   })
