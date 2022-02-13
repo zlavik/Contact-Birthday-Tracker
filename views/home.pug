@@ -2,9 +2,8 @@ extends layout
 
 block main
   header
-    h1
-      | Welcome
-      span !
+    h1(id='output' style='margin-bottom: 0px;')
+    span(style='font-size: 40px;') !
   .site-wrap
     p
       | Scroll down for a brief demonstration.
@@ -26,3 +25,19 @@ block main
     img.align-left.slide-in(src='/images/reminder-all.png' style='max-width: 50%; height: auto;'  )
     p
       a.button(href='#') Back to top
+  script.
+    window.onload = function(){
+      let today = new Date()
+      let currentHour = today.getHours()
+      let greeting;
+
+      if (currentHour < 12) {
+        greeting = 'Good morning';
+      } else if (currentHour < 18) {
+        greeting = 'Good afternoon';
+      } else {
+        greeting = 'Good evening';
+      }
+
+      document.getElementById('output').innerHTML = greeting;
+    }
