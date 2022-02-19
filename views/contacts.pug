@@ -31,7 +31,11 @@ block main
               | Birthday
               i.caret
           th
-            p.sort
+            p.sort(data-sort='phone')
+              | Phone Number
+              i.caret
+          th
+            p.sort(data-sort='sort')
               | Action
               i.caret
         tbody.list
@@ -41,6 +45,7 @@ block main
               td.minify.lastname=contact.lastname
               td.minify.relationship=contact.category
               td.minify.birthday=contact.birthday.toDateString().split(' ').slice(1).join(' ')
+              td.minify.relationship=contact.phonenumber
               td.minify.setting
                 form
                   button.button(formaction=`/contacts/${contact.id}/edit` formmethod='get') Edit 
@@ -52,7 +57,7 @@ block main
                       
         tfoot
           tr
-            td.table-footer(colspan='5')
+            td.table-footer(colspan='6')
               .table-pagination
                 button.btn-tablepage.jTablePagePrev(type='button') &laquo;
                 ul.pagination
@@ -60,7 +65,7 @@ block main
               .table-filter
                 input.search(placeholder='Search ')
               .table-filter
-                a.button(style='padding-left: 160px;')(href=`/contacts/new`) New Contact 
+                a.button(href=`/contacts/new` style='padding-left: 160px;') New Contact 
                   i.fa.fa-address-card-o
 
   script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js')

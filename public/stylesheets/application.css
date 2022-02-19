@@ -315,7 +315,19 @@ nav a {
 nav a:hover {
   color: #aa9090;
 }
-
+.mainLogo {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0px;
+  bottom: 50px;
+  width: 222px;
+  display: block;
+  z-index: 9999;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 25px;
+}
 span {
   color: #ff5274;
   font-size: 20px;
@@ -494,9 +506,7 @@ tr:last-child td {
   border-top: 1px solid #d2d2d2;
   padding: 0;
 }
-.table-filter {
-  
-}
+
 
 .table-filter .search {
   padding: 9px;

@@ -14,14 +14,15 @@ html(lang="en-US")
   body
     main
       link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Montserrat|Open+Sans')
-      nav#main
-
-          
+      nav#main      
         ul
-          li.logo
-            a(href='/' title='Contacts')
+          h1.mainLogo
+            a(href='/')
               | Nudge
-              span .
+              span .   
+          li.logo
+            a(href='https://www.linkedin.com/in/slavik-ferris/')
+              | LinkedIn
           if signedIn
             li
               form(method='post' action='/users/signout')

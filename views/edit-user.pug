@@ -41,38 +41,158 @@ block main
       flex-direction: column;
       align-items: center;
     }
+    a:hover {
+      text-decoration: none;
+    }
   ul#myTab.nav.nav-tabs
     li.nav-item
-      a.nav-link.active(href='#sectionA' data-toggle='tab') All reminders
+      a.nav-link.active(href='#sectionA' data-toggle='tab') Default Reminders
     li.nav-item
-      a.nav-link(href='#sectionB' data-toggle='tab') Password Reset
+      a.nav-link(href='#sectionB' data-toggle='tab') Change Password
     li.nav-item
       a.nav-link(href='#sectionC' data-toggle='tab') Delete Account
   .tab-content
     #sectionA.tab-pane.fade.show.active
       .profile-body
         .profile-reminder.tab
-          h1 Set all current contacts reminders to:
-          form#add-contact-form(action=`/setting/edit` method="post")
-            ul
-              li.reminderchoice
-                input#dayReminder(type='checkbox' name='day' value='true' checked=JSON.parse(userInfo.dayreminder) )
-                label(for='dayReminder') 
-                  span
-                  | 1 Day reminder
-                input#weekReminder(type='checkbox' name='week' value='true' checked=JSON.parse(userInfo.weekreminder))
-                label(for='weekReminder') 
-                  span
-                  | 7 Day reminder              
-                input#monthReminder(type='checkbox' name='month' value='true' checked=JSON.parse(userInfo.monthreminder))
-                label(for='monthReminder') 
-                  span
-                  | 30 Day reminder
-            fieldset.reminderbuttons 
-              input.btn.btn-submit(type='submit' value='Submit')
-              a.btn.btn-cancel(href='/contacts') Cancel
+          ul#myTab.nav.nav-tabs
+            li.nav-item
+              a.nav-link.active(href='#sectionD' data-toggle='tab') Family
+            li.nav-item
+              a.nav-link(href='#sectionE' data-toggle='tab') Friend
+            li.nav-item
+              a.nav-link(href='#sectionF' data-toggle='tab') Co-Worker
+            li.nav-item
+              a.nav-link(href='#sectionG' data-toggle='tab') Acquaintance
+            li.nav-item
+              a.nav-link(href='#sectionH' data-toggle='tab') Other
+            li.nav-item
+              a.nav-link(href='#sectionI' data-toggle='tab' style='color: #cf2245;;') Reset all contacts
+          .tab-content
+            #sectionD.tab-pane.fade.show.active
+              h1 Set Default: Family
+              form#add-contact-form(action=`/setting/preferenceFamily` method="post")
+                ul
+                  li.reminderchoice
+                    input#dayReminderFamily(type='checkbox' name='day' value='true' checked=JSON.parse(userInfo.dayreminderfamily) )
+                    label(for='dayReminderFamily') 
+                      span
+                      | 1 Day reminder
+                    input#weekReminderFamily(type='checkbox' name='week' value='true' checked=JSON.parse(userInfo.weekreminderfamily))
+                    label(for='weekReminderFamily') 
+                      span
+                      | 7 Day reminder              
+                    input#monthReminderFamily(type='checkbox' name='month' value='true' checked=JSON.parse(userInfo.monthreminderfamily))
+                    label(for='monthReminderFamily') 
+                      span
+                      | 30 Day reminder
+                fieldset.reminderbuttons 
+                  input.btn.btn-submit(type='submit' value='Save')
+                  a.btn.btn-cancel(href='/contacts') Cancel
+            #sectionE.tab-pane.fade
+              h1 Set Default: Friend
+              form#add-contact-form(action=`/setting/preferenceFriend` method="post")
+                ul
+                  li.reminderchoice
+                    input#dayReminderFriend(type='checkbox' name='day' value='true' checked=JSON.parse(userInfo.dayreminderfriend) )
+                    label(for='dayReminderFriend') 
+                      span
+                      | 1 Day reminder
+                    input#weekReminderFriend(type='checkbox' name='week' value='true' checked=JSON.parse(userInfo.weekreminderfriend))
+                    label(for='weekReminderFriend') 
+                      span
+                      | 7 Day reminder              
+                    input#monthReminderFriend(type='checkbox' name='month' value='true' checked=JSON.parse(userInfo.monthreminderfriend))
+                    label(for='monthReminderFriend') 
+                      span
+                      | 30 Day reminder
+                fieldset.reminderbuttons 
+                  input.btn.btn-submit(type='submit' value='Save')
+                  a.btn.btn-cancel(href='/contacts') Cancel
+            #sectionF.tab-pane.fade
+              h1 Set Default: Co-Worker
+              form#add-contact-form(action=`/setting/preferenceCoWorker` method="post")
+                ul
+                  li.reminderchoice
+                    input#dayReminderCoWorker(type='checkbox' name='day' value='true' checked=JSON.parse(userInfo.dayremindercoworker) )
+                    label(for='dayReminderCoWorker') 
+                      span
+                      | 1 Day reminder
+                    input#weekReminderCoWorker(type='checkbox' name='week' value='true' checked=JSON.parse(userInfo.weekremindercoworker))
+                    label(for='weekReminderCoWorker') 
+                      span
+                      | 7 Day reminder              
+                    input#monthReminderCoWorker(type='checkbox' name='month' value='true' checked=JSON.parse(userInfo.monthremindercoworker))
+                    label(for='monthReminderCoWorker') 
+                      span
+                      | 30 Day reminder
+                fieldset.reminderbuttons 
+                  input.btn.btn-submit(type='submit' value='Save')
+                  a.btn.btn-cancel(href='/contacts') Cancel
+            #sectionG.tab-pane.fade
+              h1 Set Default: Acquaintance
+              form#add-contact-form(action=`/setting/preferenceAccquintance` method="post")
+                ul
+                  li.reminderchoice
+                    input#dayReminderAcquaintance(type='checkbox' name='day' value='true' checked=JSON.parse(userInfo.dayreminderacquaintance) )
+                    label(for='dayReminderAcquaintance') 
+                      span
+                      | 1 Day reminder
+                    input#weekReminderAcquaintance(type='checkbox' name='week' value='true' checked=JSON.parse(userInfo.weekreminderacquaintance))
+                    label(for='weekReminderAcquaintance') 
+                      span
+                      | 7 Day reminder              
+                    input#monthReminderAcquaintance(type='checkbox' name='month' value='true' checked=JSON.parse(userInfo.monthreminderacquaintance))
+                    label(for='monthReminderAcquaintance') 
+                      span
+                      | 30 Day reminder
+                fieldset.reminderbuttons 
+                  input.btn.btn-submit(type='submit' value='Save')
+                  a.btn.btn-cancel(href='/contacts') Cancel
+            #sectionH.tab-pane.fade
+              h1 Set Default: Other
+              form#add-contact-form(action=`/setting/preferenceOther` method="post")
+                ul
+                  li.reminderchoice
+                    input#dayReminderOther(type='checkbox' name='day' value='true' checked=JSON.parse(userInfo.dayreminderother) )
+                    label(for='dayReminderOther') 
+                      span
+                      | 1 Day reminder
+                    input#weekReminderOther(type='checkbox' name='week' value='true' checked=JSON.parse(userInfo.weekreminderother))
+                    label(for='weekReminderOther') 
+                      span
+                      | 7 Day reminder              
+                    input#monthReminderOther(type='checkbox' name='month' value='true' checked=JSON.parse(userInfo.monthreminderother))
+                    label(for='monthReminderOther') 
+                      span
+                      | 30 Day reminder
+                fieldset.reminderbuttons 
+                  input.btn.btn-submit(type='submit' value='Save')
+                  a.btn.btn-cancel(href='/contacts') Cancel
+            #sectionI.tab-pane.fade
+              h1 Resets All Current Contacts
+              form#add-contact-form(action=`/setting/preferenceAll` method="post")
+                ul
+                  li.reminderchoice
+                    input#dayReminder(type='checkbox' name='day' value='true')
+                    label(for='dayReminder') 
+                      span
+                      | 1 Day reminder
+                    input#weekReminder(type='checkbox' name='week' value='true')
+                    label(for='weekReminder') 
+                      span
+                      | 7 Day reminder              
+                    input#monthReminder(type='checkbox' name='month' value='true')
+                    label(for='monthReminder') 
+                      span
+                      | 30 Day reminder
+                fieldset.reminderbuttons 
+                  input.btn.btn-submit(type='submit' value='Save' onclick="return confirm('Are you sure you set all current contacts to these settings? This cannot be undone')")
+                  a.btn.btn-cancel(href='/contacts') Cancel
+
+
     #sectionB.tab-pane.fade
-      h1 Password Reset
+      h1 Change Password
       form(action=`/password-reset` method="post")
         ul
           li
@@ -86,7 +206,7 @@ block main
             input(type="password" name="newPasswordConfirm" placeholder='Confirm New Password' value=newPasswordConfirm required='')
           li
             a.btn.btn-cancel(href='/contacts' style='margin-right:1px;') Cancel
-            input.btn.btn-submit(type='submit' value='Reset Password')
+            input.btn.btn-submit(type='submit' value='Change Password')
     #sectionC.tab-pane.fade
         h1 Delete Account
         form.centerTitle(action=`/account-delete` method="post")
@@ -141,4 +261,5 @@ block main
       $('#myTab a[href="' + activeTab + '"]').tab('show');
       }
     });
+    
 

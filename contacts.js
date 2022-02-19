@@ -79,13 +79,18 @@ const validateBirthday = (birthday) => {
   .withMessage("Date of birth is required.");
 }
 const validatePhoneNumber = (phoneNumber) => {
-  return body(phoneNumber)
-  .trim()
-  .isLength({ min: 10 })
-  .withMessage("Phone number is required.")
-  .bail()
-  .matches(/^\d\d\d-\d\d\d-\d\d\d\d$|^\d\d\d\d\d\d\d\d\d\d$/)
-  .withMessage("Invalid phone number. Enter 10 digits in this format: ###-###-#### or ##########.");
+  if (phoneNumber) {
+    return body(phoneNumber)
+    .trim()
+    .isLength({ min: 10 })
+    .withMessage("Phone number is required.")
+    .bail()
+    .matches(/^\d\d\d-\d\d\d-\d\d\d\d$|^\d\d\d\d\d\d\d\d\d\d$/)
+    .withMessage("Invalid phone number. Enter 10 digits in this format: ###-###-#### or ##########.");
+  } else {
+    return '';
+  }
+
 }
 const validateRelation = (relationship) => {
   return body(relationship)
@@ -259,12 +264,14 @@ app.post("/contacts/new",
   [
     validateName('firstName', "First"),
     validateName('lastName', "Last"),
-    validatePhoneNumber('phoneNumber'),
     validateBirthday('birthday'),
     validateRelation('category')
   ],
   catchError(async (req, res) => {
     let errors = validationResult(req);
+    let monthReminder = false;
+    let weekReminder = false;
+    let dayReminder = false;
 
     const rerenderNewList = () => {
       res.render("new-contact", {
@@ -275,15 +282,48 @@ app.post("/contacts/new",
         relationship: req.body.category,
         phoneNumber: formatPhoneNumber(req.body.phoneNumber),
       });
-
     };
     if (!errors.isEmpty()) {
       errors.array().forEach(message => req.flash("error", message.msg));
       rerenderNewList();
     } else {
+        let userInfo = await res.locals.store.loadUser();
+
+        switch (req.body.category) {
+          case 'Family' :
+            monthReminder = userInfo.monthreminderfamily;
+            weekReminder = userInfo.weekreminderfamily;
+            dayReminder = userInfo.dayreminderfamily;
+            break;
+          case 'Friend' :
+            monthReminder = userInfo.monthreminderfriend;
+            weekReminder = userInfo.weekreminderfriend;
+            dayReminder = userInfo.dayreminderfriend;
+            break;
+          case 'Co-Worker' :
+            monthReminder = userInfo.monthremindercoworker;
+            weekReminder = userInfo.weekremindercoworker;
+            dayReminder = userInfo.dayremindercoworker;
+            break;
+          case 'Accquintance' :
+            monthReminder = userInfo.monthreminderaccquintance;
+            weekReminder = userInfo.weekreminderaccquintance;
+            dayReminder = userInfo.dayreminderaccquintance;
+            break;
+          case 'Other' :
+            monthReminder = userInfo.monthreminderother;
+            weekReminder = userInfo.weekreminderother;
+            dayReminder = userInfo.dayreminderother;
+            break;
+          default :
+            monthReminder = false;
+            weekReminder = false;
+            dayReminder = false;
+        }
+        console.log(monthReminder)
         let created = await res.locals.store.createContact(capitalizeName(req.body.firstName), 
                             capitalizeName(req.body.lastName), req.body.birthday, 
-                            req.body.category, formatPhoneNumber(req.body.phoneNumber));
+                            req.body.category, formatPhoneNumber(req.body.phoneNumber), monthReminder, weekReminder, dayReminder);
         if (!created) throw new Error("Not found.");
         req.flash("success", `${req.body.firstName} ${req.body.lastName} has been added to your contact list.`);
         res.redirect(`/contacts`);
@@ -308,7 +348,7 @@ app.post("/contacts/:contactId/edit",
   [
     validateName('firstName', "First"),
     validateName('lastName', "Last"),
-    validatePhoneNumber('phoneNumber'),
+    // validatePhoneNumber('phoneNumber'),
     validateBirthday('birthday'),
     validateRelation('category')
   ],
@@ -385,6 +425,8 @@ app.post(`/contacts/:contactID/setReminder`,
       res.redirect("/contacts");
     })
 );
+
+
 
 // handles sending a test reminder for testing purposes
 app.post('/contacts/:contactID/sendTestReminder', 
@@ -466,7 +508,7 @@ app.post("/password-reset",
 );
 
 // Handles editing preferences for all contacts
-app.post(`/setting/edit`, 
+app.post(`/setting/preferenceAll`, 
     requiresAuthentication,
     catchError(async (req, res, next) => {
       let dayPref = !!req.body.day ? true : false;
@@ -474,6 +516,76 @@ app.post(`/setting/edit`,
       let monthPref = !!req.body.month ? true : false;
       let reminderPreferenceSetAll = await res.locals.store.setReminderPreferenceAll(dayPref, weekPref, monthPref);
       if (!reminderPreferenceSetAll) throw new Error("Error");
+      req.flash("success", "Preference set set for all contacts successfully");
+      res.redirect("/setting");
+    })
+);
+
+// Handles setting preferences for Family contacts
+app.post(`/setting/preferenceFamily`, 
+    requiresAuthentication,
+    catchError(async (req, res, next) => {
+      let dayPref = !!req.body.day ? true : false;
+      let weekPref = !!req.body.week ? true : false;
+      let monthPref = !!req.body.month ? true : false;
+      let reminderPreferenceFamily = await res.locals.store.setReminderPreferenceFamily(dayPref, weekPref, monthPref);
+      if (!reminderPreferenceFamily) throw new Error("Error");
+      req.flash("success", "Preference set set for all contacts successfully");
+      res.redirect("/setting");
+    })
+);
+
+// Handles setting preferences for friend contacts
+app.post(`/setting/preferenceFriend`, 
+    requiresAuthentication,
+    catchError(async (req, res, next) => {
+      let dayPref = !!req.body.day ? true : false;
+      let weekPref = !!req.body.week ? true : false;
+      let monthPref = !!req.body.month ? true : false;
+      let reminderPreferenceFriend = await res.locals.store.setReminderPreferenceFriend(dayPref, weekPref, monthPref);
+      if (!reminderPreferenceFriend) throw new Error("Error");
+      req.flash("success", "Preference set set for all contacts successfully");
+      res.redirect("/setting");
+    })
+);
+
+// Handles setting preferences for CoWorker contacts
+app.post(`/setting/preferenceCoWorker`, 
+    requiresAuthentication,
+    catchError(async (req, res, next) => {
+      let dayPref = !!req.body.day ? true : false;
+      let weekPref = !!req.body.week ? true : false;
+      let monthPref = !!req.body.month ? true : false;
+      let reminderPreferenceCoWorker = await res.locals.store.setReminderPreferenceCoWorker(dayPref, weekPref, monthPref);
+      if (!reminderPreferenceCoWorker) throw new Error("Error");
+      req.flash("success", "Preference set set for all contacts successfully");
+      res.redirect("/setting");
+    })
+);
+
+// Handles setting preferences for Accquintance contacts
+app.post(`/setting/preferenceAccquintance`, 
+    requiresAuthentication,
+    catchError(async (req, res, next) => {
+      let dayPref = !!req.body.day ? true : false;
+      let weekPref = !!req.body.week ? true : false;
+      let monthPref = !!req.body.month ? true : false;
+      let reminderPreferenceAccquintance = await res.locals.store.setReminderPreferenceAccquintance(dayPref, weekPref, monthPref);
+      if (!reminderPreferenceAccquintance) throw new Error("Error");
+      req.flash("success", "Preference set set for all contacts successfully");
+      res.redirect("/setting");
+    })
+);
+
+// Handles setting preferences for Other contacts
+app.post(`/setting/preferenceOther`, 
+    requiresAuthentication,
+    catchError(async (req, res, next) => {
+      let dayPref = !!req.body.day ? true : false;
+      let weekPref = !!req.body.week ? true : false;
+      let monthPref = !!req.body.month ? true : false;
+      let reminderPreferenceOther = await res.locals.store.setReminderPreferenceOther(dayPref, weekPref, monthPref);
+      if (!reminderPreferenceOther) throw new Error("Error");
       req.flash("success", "Preference set set for all contacts successfully");
       res.redirect("/setting");
     })

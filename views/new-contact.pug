@@ -31,10 +31,8 @@ block main
             p
               label(for='phoneNumber')
                 | Phone Number
-                span.req *
               input(type="text"
                 name="phoneNumber"
-                required="true"
                 placeholder='123-456-7890'
                 value=phoneNumber)
           li
@@ -48,6 +46,7 @@ block main
                     min='1922-01-01' 
                     max= `${new Date().toISOString().split('T')[0]}`
                     required="true"
+                    value=birthday
                     )
             p.pull-center
               label(for='dob') Relationship 
@@ -59,4 +58,4 @@ block main
                 option(value='Acquaintance') Acquaintance
           li
             a.btn.btn-cancel(href='/contacts') Cancel
-            input.btn.btn-submit(type='submit' value='Submit')
+            input.btn.btn-submit(type='submit' value='Save')
