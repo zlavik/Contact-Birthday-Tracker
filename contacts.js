@@ -305,10 +305,10 @@ app.post("/contacts/new",
             weekReminder = userInfo.weekremindercoworker;
             dayReminder = userInfo.dayremindercoworker;
             break;
-          case 'Accquintance' :
-            monthReminder = userInfo.monthreminderaccquintance;
-            weekReminder = userInfo.weekreminderaccquintance;
-            dayReminder = userInfo.dayreminderaccquintance;
+          case 'Acquaintance' :
+            monthReminder = userInfo.monthreminderacquaintance;
+            weekReminder = userInfo.weekreminderacquaintance;
+            dayReminder = userInfo.dayreminderacquaintance;
             break;
           case 'Other' :
             monthReminder = userInfo.monthreminderother;
@@ -563,15 +563,15 @@ app.post(`/setting/preferenceCoWorker`,
     })
 );
 
-// Handles setting preferences for Accquintance contacts
-app.post(`/setting/preferenceAccquintance`, 
+// Handles setting preferences for Acquaintance contacts
+app.post(`/setting/preferenceAcquaintance`, 
     requiresAuthentication,
     catchError(async (req, res, next) => {
       let dayPref = !!req.body.day ? true : false;
       let weekPref = !!req.body.week ? true : false;
       let monthPref = !!req.body.month ? true : false;
-      let reminderPreferenceAccquintance = await res.locals.store.setReminderPreferenceAccquintance(dayPref, weekPref, monthPref);
-      if (!reminderPreferenceAccquintance) throw new Error("Error");
+      let reminderPreferenceAcquaintance = await res.locals.store.setReminderPreferenceAcquaintance(dayPref, weekPref, monthPref);
+      if (!reminderPreferenceAcquaintance) throw new Error("Error");
       req.flash("success", "Preference set set for all contacts successfully");
       res.redirect("/setting");
     })
