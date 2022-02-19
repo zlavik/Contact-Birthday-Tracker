@@ -32,26 +32,6 @@ CREATE TABLE users (
   dayReminderOther boolean DEFAULT false    
 );
 
--- ALTER TABLE users
---   ADD   weekReminderFamily boolean DEFAULT false,
---   ADD   dayReminderFamily boolean DEFAULT false,
-
---   ADD   monthReminderFriend boolean DEFAULT false,
---   ADD   weekReminderFriend boolean DEFAULT false,
---   ADD   dayReminderFriend boolean DEFAULT false, 
-
---   ADD   monthReminderCoWorker boolean DEFAULT false,
---   ADD   weekReminderCoWorker boolean DEFAULT false,
---   ADD   dayReminderCoWorker boolean DEFAULT false,
-
---   ADD   monthReminderAcquaintance boolean DEFAULT false,
---   ADD   weekReminderAcquaintance boolean DEFAULT false,
---   ADD   dayReminderAcquaintance boolean DEFAULT false,
-
---   ADD   monthReminderOther boolean DEFAULT false,
---   ADD   weekReminderOther boolean DEFAULT false,
---   ADD   dayReminderOther boolean DEFAULT false;   
-
 CREATE TABLE contacts (
   id serial PRIMARY KEY,
   firstName text NOT NULL,
