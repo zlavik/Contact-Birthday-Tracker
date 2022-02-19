@@ -4,7 +4,8 @@ block main
   .container
     .row.header
       ul(style='text-align: center;')
-        h2.addcontact Birthday Notification: #{contact.firstname} #{contact.lastname}
+        h2.addcontact Birthday Notification: 
+        h2 #{contact.firstname} #{contact.lastname}
         form#add-contact-form(action=`/contacts/${contact.id}/setReminder` method="post")
           ul
             li.reminderchoice
