@@ -1,4 +1,4 @@
-# Contact birthday reminder app
+# Contact Birthday Tracker
 Live Link: https://birthday-nudge.herokuapp.com/
 
 # Features
