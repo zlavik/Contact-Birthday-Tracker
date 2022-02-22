@@ -4,7 +4,7 @@ block main
   #form_container
     form.signin-form#login2(action=`/signin` method="post")
       h1 Sign in
-      input(type='text' name='username'  placeholder='Username' value=username required='')
+      input(type='text' name='username'  placeholder='Username or Email' value=username required='')
       input(type='password' name='password' placeholder='Password' value=password required='')
       input.btn.btn-submit(type='submit' value='Sign In')
       #link_container
