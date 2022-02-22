@@ -516,7 +516,7 @@ app.post(`/setting/preferenceAll`,
       let monthPref = !!req.body.month ? true : false;
       let reminderPreferenceSetAll = await res.locals.store.setReminderPreferenceAll(dayPref, weekPref, monthPref);
       if (!reminderPreferenceSetAll) throw new Error("Error");
-      req.flash("success", "Preference set set for all contacts successfully");
+      req.flash("success", "Preference set for all contacts successfully");
       res.redirect("/setting");
     })
 );
@@ -530,7 +530,7 @@ app.post(`/setting/preferenceFamily`,
       let monthPref = !!req.body.month ? true : false;
       let reminderPreferenceFamily = await res.locals.store.setReminderPreferenceFamily(dayPref, weekPref, monthPref);
       if (!reminderPreferenceFamily) throw new Error("Error");
-      req.flash("success", "Preference set set for all contacts successfully");
+      req.flash("success", "Default setting for family set successfully");
       res.redirect("/setting");
     })
 );
@@ -544,7 +544,7 @@ app.post(`/setting/preferenceFriend`,
       let monthPref = !!req.body.month ? true : false;
       let reminderPreferenceFriend = await res.locals.store.setReminderPreferenceFriend(dayPref, weekPref, monthPref);
       if (!reminderPreferenceFriend) throw new Error("Error");
-      req.flash("success", "Preference set set for all contacts successfully");
+      req.flash("success", "Default setting for friends set successfully");
       res.redirect("/setting");
     })
 );
@@ -558,7 +558,7 @@ app.post(`/setting/preferenceCoWorker`,
       let monthPref = !!req.body.month ? true : false;
       let reminderPreferenceCoWorker = await res.locals.store.setReminderPreferenceCoWorker(dayPref, weekPref, monthPref);
       if (!reminderPreferenceCoWorker) throw new Error("Error");
-      req.flash("success", "Preference set set for all contacts successfully");
+      req.flash("success", "Default setting for co-workers set successfully");
       res.redirect("/setting");
     })
 );
@@ -572,7 +572,7 @@ app.post(`/setting/preferenceAcquaintance`,
       let monthPref = !!req.body.month ? true : false;
       let reminderPreferenceAcquaintance = await res.locals.store.setReminderPreferenceAcquaintance(dayPref, weekPref, monthPref);
       if (!reminderPreferenceAcquaintance) throw new Error("Error");
-      req.flash("success", "Preference set set for all contacts successfully");
+      req.flash("success", "Default setting for acquaintaces set successfully");
       res.redirect("/setting");
     })
 );
@@ -586,7 +586,7 @@ app.post(`/setting/preferenceOther`,
       let monthPref = !!req.body.month ? true : false;
       let reminderPreferenceOther = await res.locals.store.setReminderPreferenceOther(dayPref, weekPref, monthPref);
       if (!reminderPreferenceOther) throw new Error("Error");
-      req.flash("success", "Preference set set for all contacts successfully");
+      req.flash("success", "Default setting for all other contacts set successfully");
       res.redirect("/setting");
     })
 );
