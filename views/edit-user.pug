@@ -14,6 +14,10 @@ block main
       border: 0px solid transparent;
       color: white;
     }
+    
+    .nav-sub-tab {
+      border-bottom: 1px solid #8b8889;
+    }
 
     .nav-tabs {
       border-bottom: 0px solid #dee2e6;
@@ -56,23 +60,28 @@ block main
       .profile-body
         .profile-reminder.tab
           ul#myTab.nav.nav-tabs
-            li.nav-item
+            li.nav-item.nav-sub-tab
               a.nav-link.active(href='#sectionD' data-toggle='tab') Family
-            li.nav-item
+            li.nav-item.nav-sub-tab
               a.nav-link(href='#sectionE' data-toggle='tab') Friend
-            li.nav-item
+            li.nav-item.nav-sub-tab
               a.nav-link(href='#sectionF' data-toggle='tab') Co-Worker
-            li.nav-item
+            li.nav-item.nav-sub-tab
               a.nav-link(href='#sectionG' data-toggle='tab') Acquaintance
-            li.nav-item
+            li.nav-item.nav-sub-tab
               a.nav-link(href='#sectionH' data-toggle='tab') Other
-            li.nav-item
+            li.nav-item.nav-sub-tab
               a.nav-link(href='#sectionI' data-toggle='tab' style='color: #cf2245;;') Reset all contacts
           .tab-content
             #sectionD.tab-pane.fade.show.active
               h1 Set Default: Family
               form#add-contact-form(action=`/setting/preferenceFamily` method="post")
                 ul
+                  li
+                    input#reminderCurrentFamily(type='checkbox' name='current' value='true')
+                    label(for='reminderCurrentFamily') 
+                      span
+                      | Apply to all current family contacts
                   li.reminderchoice
                     input#dayReminderFamily(type='checkbox' name='day' value='true' checked=JSON.parse(userInfo.dayreminderfamily) )
                     label(for='dayReminderFamily') 
@@ -93,6 +102,11 @@ block main
               h1 Set Default: Friend
               form#add-contact-form(action=`/setting/preferenceFriend` method="post")
                 ul
+                  li
+                    input#reminderCurrentFriend(type='checkbox' name='current' value='true')
+                    label(for='reminderCurrentFriend') 
+                      span
+                      | Apply to all current friend contacts
                   li.reminderchoice
                     input#dayReminderFriend(type='checkbox' name='day' value='true' checked=JSON.parse(userInfo.dayreminderfriend) )
                     label(for='dayReminderFriend') 
@@ -113,6 +127,11 @@ block main
               h1 Set Default: Co-Worker
               form#add-contact-form(action=`/setting/preferenceCoWorker` method="post")
                 ul
+                  li
+                    input#reminderCurrentCoWorker(type='checkbox' name='current' value='true')
+                    label(for='reminderCurrentCoWorker') 
+                      span
+                      | Apply to all current co-worker contacts
                   li.reminderchoice
                     input#dayReminderCoWorker(type='checkbox' name='day' value='true' checked=JSON.parse(userInfo.dayremindercoworker) )
                     label(for='dayReminderCoWorker') 
@@ -133,6 +152,11 @@ block main
               h1 Set Default: Acquaintance
               form#add-contact-form(action=`/setting/preferenceAcquaintance` method="post")
                 ul
+                  li
+                    input#reminderCurrentAcquaintance(type='checkbox' name='current' value='true')
+                    label(for='reminderCurrentAcquaintance') 
+                      span
+                      | Apply to all current acquaintance contacts
                   li.reminderchoice
                     input#dayReminderAcquaintance(type='checkbox' name='day' value='true' checked=JSON.parse(userInfo.dayreminderacquaintance) )
                     label(for='dayReminderAcquaintance') 
@@ -153,6 +177,11 @@ block main
               h1 Set Default: Other
               form#add-contact-form(action=`/setting/preferenceOther` method="post")
                 ul
+                  li
+                    input#reminderCurrentOther(type='checkbox' name='current' value='true')
+                    label(for='reminderCurrentOther') 
+                      span
+                      | Apply to all current other contacts
                   li.reminderchoice
                     input#dayReminderOther(type='checkbox' name='day' value='true' checked=JSON.parse(userInfo.dayreminderother) )
                     label(for='dayReminderOther') 

@@ -8,9 +8,9 @@ block main
       table
         h2 
           small
-            | You don't have any contacts. Why not add one? 
-          a.button(href=`/contacts/new`) New Contact 
-            i.fa.fa-address-card-o
+            | You don't have any contacts. Why not add one?
+          a.button.i.fa.fa-long-arrow-right(href=`/contacts/new` style="font-size: 26px;")  New Contact 
+            i.fa.fa-long-arrow-left
     else
       table.table-list(data-currentpage='1')
         thead

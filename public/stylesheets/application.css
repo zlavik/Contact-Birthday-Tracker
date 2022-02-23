@@ -824,6 +824,7 @@ h2 small {
   color:#ff5274; 
   margin: 0 5%;
   display:block; 
+  font-size: 18px;
 }
 input[type="checkbox"] + label {
   color:#f2f2f2;
