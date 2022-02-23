@@ -17,7 +17,7 @@ html(lang="en-US")
       nav#main      
         ul
           h1.mainLogo
-            a(href='/')
+            a(href='/' style='font-size: 26px; padding-top: 5px;')
               | Nudge
               span .   
           li.logo
@@ -85,15 +85,13 @@ html(lang="en-US")
 
       function checkSlide(e) {
         sliderImages.forEach(sliderImage => {
-          const slideInAt = (window.scrollY + window.innerHeight) - sliderImage.height / 2;
+          const slideInAt = (window.scrollY + window.innerHeight) ;
           const imageBottom = sliderImage.offsetTop + sliderImage.height;
           const isHalfShown = slideInAt > sliderImage.offsetTop;
           const isNotScrolledPast = window.scrollY < imageBottom;
 
           if(isHalfShown && isNotScrolledPast) {
             sliderImage.classList.add('active');
-          } else {
-            sliderImage.classList.remove('active');
           }
         });
       }
