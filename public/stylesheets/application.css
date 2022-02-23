@@ -339,7 +339,7 @@ img {
 
 .slide-in {
   opacity: 0;
-  transition: all .1s;
+  transition: all .5s;
 }
 
 .align-left.slide-in {
@@ -705,19 +705,19 @@ form textarea {
 }
 
 .flash.success {
-  color: #3c763d;
+  color: #8aff8c;
 }
 
 .flash.info {
-  color: #31708f;
+  color: #b9b9b9;
 }
 
 .flash.warning {
-  color: #8a6d3b;
+  color: #ff9c6e;
 }
 
 .flash.error {
-  color: #e96663;
+  color: #ff4542;
 }
 
 
